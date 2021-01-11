@@ -2,12 +2,24 @@ from django.contrib import admin
 from . import models
 
 
-@admin.register(models.RoomType, models.Facility, models.Amenity, models.HouseRule)
+@admin.register(models.RoomType, models.Amenity, models.HouseRule)
 class ItemAdmin(admin.ModelAdmin):
 
     """ Item Admin Definition """
 
-    pass
+    list_display = (
+        "name",
+        "used_in",
+    )
+
+    def used_in(self, obj):
+
+        num_of_rooms = obj.rooms.count()
+
+        if num_of_rooms == 1:
+            return f"{num_of_rooms} room"
+        else:
+            return f"{num_of_rooms} rooms"
 
 
 @admin.register(models.Room)
@@ -79,6 +91,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_out",
         "instant_book",
         "count_amenities",
+        "count_photos",
     )
 
     list_filter = (
@@ -92,7 +105,7 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     search_fields = (
-        "^city",
+        "=city",
         "^host__username",
     )
 
@@ -102,8 +115,10 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     def count_amenities(self, obj):
-        print(len(obj.amenities.all()))
-        return len(obj.amenities.all())
+        return obj.amenities.count()
+
+    def count_photos(self, obj):
+        return obj.photos.count()  # related name을 지정했기 때문에 photo_set 이 아니라 photos
 
     count_amenities.short_description = "Number of Amenities"
 
