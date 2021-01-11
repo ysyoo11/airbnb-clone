@@ -86,6 +86,10 @@ class Room(core_models.TimeStampedModel):
         all_ratings = 0
         for review in all_reviews:
             all_ratings += review.get_avg_rating()
-        return all_ratings / len(all_reviews)
 
-    get_total_rating.short_description = "total_rating"
+        if len(all_reviews) > 0:
+            return all_ratings / len(all_reviews)
+        else:
+            return 0
+
+    get_total_rating.short_description = "total rating"

@@ -122,6 +122,7 @@ class RoomAdmin(admin.ModelAdmin):
         return obj.photos.count()  # related name을 지정했기 때문에 photo_set 이 아니라 photos
 
     count_amenities.short_description = "Number of Amenities"
+    count_photos.short_description = "Number of Photos"
 
 
 @admin.register(models.Photo)
