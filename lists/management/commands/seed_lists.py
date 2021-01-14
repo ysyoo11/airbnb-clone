@@ -1,11 +1,12 @@
 import random
 from django.core.management.base import BaseCommand
+from django.contrib.admin.utils import flatten
 from django_seed import Seed
-from reviews import models as review_models
 from users import models as user_models
 from rooms import models as room_models
+from lists import models as list_models
 
-NAME = "reviews"
+NAME = "lists"
 
 
 class Command(BaseCommand):
@@ -24,20 +25,19 @@ class Command(BaseCommand):
         number = options.get("number")
         seeder = Seed.seeder()
         users = user_models.User.objects.all()
-        rooms = room_models.Room.objects.all()
         seeder.add_entity(
-            review_models.Review,
+            list_models.List,
             number,
             {
-                "cleanliness": lambda x: random.randint(1, 5),
-                "accuracy": lambda x: random.randint(1, 5),
-                "communication": lambda x: random.randint(1, 5),
-                "location": lambda x: random.randint(1, 5),
-                "check_in": lambda x: random.randint(1, 5),
-                "value": lambda x: random.randint(1, 5),
                 "user": lambda x: random.choice(users),
-                "room": lambda x: random.choice(rooms),
             },
         )
-        seeder.execute()
+        created_list = seeder.execute()
+        cleaned_list = flatten(list(created_list.values()))
+        rooms = room_models.Room.objects.all()
+        for pk in cleaned_list:
+            a_list = list_models.List.objects.get(pk=pk)
+            to_add = rooms[random.randint(0, 5) : random.randint(6, 30)]
+            a_list.rooms.add(*to_add)
+
         self.stdout.write(self.style.SUCCESS(f"{number} {NAME} are created!"))
