@@ -5,12 +5,20 @@
 {% endblock page_name %}
 
 {% block content %}
+
   {% for room in rooms %}
     <h4>{{room.name}}
-      / ${{room.price}}
-      by
-      {{room.host}}</h4>
-    <h5>contact:
-      {{room.host.email}}</h5>
+      / ${{room.price}}</h4>
   {% endfor %}
+
+  <h5>
+  {% if not page == 1 %}
+    <a href="?page={{page|add:"-1"}}">Previous</a>
+  {% endif %}
+  Page {{page}} of {{max_page}}
+  {% if not page == max_page %}
+    <a href="?page={{page|add:"1"}}">Next</a>
+  {% endif %}
+  </h5>
+
 {% endblock content %}
