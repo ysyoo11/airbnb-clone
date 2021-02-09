@@ -28,6 +28,7 @@ class CustomUserAdmin(UserAdmin):
         "is_superuser",
         "email_verified",
         "email_code",
+        "login_method",
     )
 
     list_filter = UserAdmin.list_filter + ("superhost",)
@@ -44,6 +45,7 @@ class CustomUserAdmin(UserAdmin):
                     "language",
                     "currency",
                     "superhost",
+                    "login_method",
                 )
             },
         ),
