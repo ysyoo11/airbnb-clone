@@ -143,3 +143,4 @@ cython_debug/
 uploads/
 
 photos_seed.zip
+node_modules

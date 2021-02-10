@@ -164,11 +164,9 @@ def kakao_callback(request):
                 "https://kapi.kakao.com/v2/user/me",
                 headers={"Authorization": f"Bearer {access_token}"},
             )
-            print(profile_request.json())
             profile_json = profile_request.json()
             k_account = profile_json.get("kakao_account")
             email = k_account.get("email", None)
-            print(email)
             if email is None:
                 raise KakaoException()
             properties = profile_json.get("properties")
