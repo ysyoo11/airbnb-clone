@@ -17,4 +17,8 @@
   @apply transform -translate-y-3;
 }
 
+.paginator_arrow {
+  @apply rounded-full px-3 py-2 duration-150 font-bold hover:bg-gray-700 hover:text-white;
+}
+
 @tailwind utilities;
