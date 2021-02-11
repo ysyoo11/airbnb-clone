@@ -6,8 +6,12 @@ class LoginForm(forms.Form):
 
     """ LoginForm Definition """
 
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={"placeholder": "Email Address"})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )
 
     def clean(self):
         email = self.cleaned_data.get("email")
@@ -29,9 +33,18 @@ class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ("first_name", "last_name", "email")
+        widgets = {
+            "first_name": forms.TextInput(attrs={"placeholder": "First name"}),
+            "last_name": forms.TextInput(attrs={"placeholder": "Last name"}),
+            "email": forms.EmailInput(attrs={"placeholder": "Email Address"}),
+        }
 
-    password = forms.CharField(widget=forms.PasswordInput())
-    password1 = forms.CharField(widget=forms.PasswordInput(), label="Confirm Password")
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Password"})
+    )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "Confirm password"})
+    )
 
     def clean_password1(self):
         password = self.cleaned_data.get("password")
