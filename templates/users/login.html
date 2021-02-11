@@ -10,12 +10,18 @@
 
 {% block content %}
 
-    {% include 'partials/social_login.html' %}
+<div class="border mx-auto mt-32 mb-14 w-full h-3/4 rounded-lg p-6 border-gray-400 md:w-7/12 lg:w-1/3 xl:w-1/3 2xl:w-1/3">
 
     <form method="POST" action="{% url 'users:login' %}">
         {% csrf_token %}
         {{form.as_p}}
-        <button>Login</button>
+        <button class="login_btn">Log in</button>
     </form>
+
+    <div class="hr-sect">or</div>
+
+    {% include 'partials/social_login.html' %}
+
+</div>
     
 {% endblock content %}

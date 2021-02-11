@@ -1,4 +1,13 @@
-<div>
-    <a href="{% url 'users:github_login' %}">Continue with GitHub</a>
-    <a href="{% url 'users:kakao_login' %}">Continue with Kakaotalk</a>
+<div class="flex flex-col justify-between items-center h-1/4">
+
+    <a class="social_login" href="{% url 'users:github_login' %}">
+        <div class="social_login_icon github"><i class="fab fa-github"></i></div>
+        <span class="social_login_text">Continue with GitHub</span>
+    </a>
+
+    <a class="social_login" href="{% url 'users:kakao_login' %}">
+        <div class="social_login_icon kakao"><i class="fab fa-kickstarter"></i></div>
+        <span class="social_login_text">Continue with Kakaotalk</span>
+    </a>
+
 </div>

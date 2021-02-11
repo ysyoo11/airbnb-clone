@@ -21,4 +21,40 @@
   @apply rounded-full px-3 py-2 duration-150 font-bold hover:bg-gray-700 hover:text-white;
 }
 
+.social_login {
+  @apply flex justify-center items-center w-full h-12 rounded-md border-2 leading-10 p-3 border-gray-400 relative hover:border-gray-700;
+
+  .social_login_icon {
+    @apply text-2xl left-3 absolute;
+  }
+  .github {
+    @apply text-gray-600;
+  }
+  .kakao {
+    @apply text-yellow-500;
+  }
+
+  .social_login_text {
+    @apply text-sm font-medium text-gray-600;
+  }
+}
+
+.login_btn {
+  @apply flex justify-center items-center w-full h-12 rounded-md leading-10 p-3 bg-red-500 text-sm font-medium text-white hover:bg-red-600;
+}
+
+.hr-sect {
+  @apply flex items-center text-gray-400 text-xs my-4;
+}
+.hr-sect::before,
+.hr-sect::after {
+  content: "";
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.2);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+  margin: 0px 16px;
+}
+
 @tailwind utilities;
