@@ -86,10 +86,10 @@ class Room(core_models.TimeStampedModel):
         self.city = self.city.title()
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):
+    def absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
 
-    def get_total_rating(self):
+    def total_rating(self):
         all_reviews = self.reviews.all()
         all_ratings = 0
         for review in all_reviews:
@@ -101,4 +101,19 @@ class Room(core_models.TimeStampedModel):
         else:
             return "No reviews"
 
-    get_total_rating.short_description = "total rating"
+    total_rating.short_description = "total rating"
+
+    def num_reviews(self):
+        all_reviews = self.reviews.all()
+        num_reviews = len(all_reviews)
+        if num_reviews == 0:
+            return ""
+        else:
+            return f"({num_reviews})"
+
+    def first_photo(self):
+        (photo,) = self.photos.all()[:1]
+        return photo.file.url
+
+    def superhost(self):
+        print(self.superhost)

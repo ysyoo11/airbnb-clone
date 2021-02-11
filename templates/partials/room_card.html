@@ -1,0 +1,22 @@
+<div class="room_card">
+    <a href="{% url 'rooms:detail' room.pk %}">
+        <div class="relative w-full mb-2 h-25vh bg-cover bg-center rounded-lg" style="background-image: url({{room.first_photo}});">
+            {% if room.host.superhost %}
+                <div class="absolute flex items-center left-2 top-2 py-1 px-2 bg-gray-100 object-fill h-6 border rounded-md text-xs font-bold border-gray-800">
+                    <span>SUPERHOST</span>
+                </div>
+            {% endif %}
+        </div>
+        <div class="mb-1 text-sm">
+            <span class="text-red-400">★</span>
+            <span>{{room.total_rating}}</span>
+            <span class="text-gray-500">{{room.num_reviews}}</span>
+        </div>
+        <div>{{room.room_type}} ･ {{room.city}}</div>
+        <div class="inline-block overflow-ellipsis whitespace-nowrap overflow-hidden w-full">{{room.name}}</div>
+        <div>
+            <span class="font-bold">${{room.price}} AUD</span>
+            <span>/ night</span>
+        </div>
+    </a>
+</div>

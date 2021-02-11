@@ -9,4 +9,12 @@
   }
 }
 
+.room_card {
+  @apply w-1/4 mb-10 px-2 duration-200;
+}
+
+.room_card:hover {
+  @apply transform -translate-y-3;
+}
+
 @tailwind utilities;
