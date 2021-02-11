@@ -41,20 +41,35 @@
 
 .social_login {
   @apply justify-center border-2 border-gray-400 mb-3 relative hover:border-gray-700;
+  &:hover {
+    .github_icon,
+    .kakao_icon,
+    .social_login_text {
+      @apply text-white;
+    }
+  }
 
   .social_login_icon {
     @apply text-2xl left-3 absolute;
   }
-  .github {
+  .github_icon {
     @apply text-gray-600;
   }
-  .kakao {
+  .kakao_icon {
     @apply text-yellow-500;
   }
 
   .social_login_text {
     @apply text-sm font-medium text-gray-600;
   }
+}
+
+.github {
+  @apply duration-200 hover:bg-gray-600;
+}
+
+.kakao {
+  @apply duration-200 hover:bg-yellow-500 hover:border-yellow-500;
 }
 
 .continue_btn {
