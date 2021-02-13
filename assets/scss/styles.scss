@@ -35,7 +35,15 @@
 
 .continue_form {
   input {
-    @apply flex w-full h-12 items-center rounded-md leading-10 p-3 border border-gray-400 mb-3 focus:outline-none focus:border-gray-700;
+    @apply flex w-full h-12 items-center rounded-md leading-10 p-3 border border-gray-400 mb-3;
+    &:focus {
+      @apply outline-none border-gray-700;
+    }
+  }
+  .has_error {
+    input {
+      @apply bg-red-200;
+    }
   }
 }
 
