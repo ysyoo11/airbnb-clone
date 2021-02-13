@@ -1,0 +1,11 @@
+<div class="continue_form">
+
+    <div class="continue_title">{{title}}</div>
+
+    {% include 'partials/login_form/auth_form.html' with form=form %}
+
+    {% include 'partials/login_form/social_login.html' %}
+
+    {% include 'partials/login_form/form_sug_msg.html' with message=message cta=cta %}
+
+</div>

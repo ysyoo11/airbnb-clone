@@ -10,24 +10,6 @@
 
 {% block content %}
 
-<div class="continue_form">
-
-    <div class="continue_title">Log in</div>
-
-    <form class="mb-0" method="POST" action="{% url 'users:login' %}">
-        {% csrf_token %}
-        {{form.email}}
-        {{form.password}}
-        <button class="btn continue_btn">Continue</button>
-    </form>
-
-    {% include 'partials/social_login.html' %}
-
-    <div class="mt-4 ml-1">
-        <span class="mr-2 text-gray-500">Don't have an account?</span>
-        <a href="{% url 'users:signup' %}" class="text-gray-600 font-medium underline hover:text-gray-400">Sign up</a>
-    </div>
-
-</div>
+{% include 'partials/login_form/continue_form.html' with title="Log in" message="Don't" cta="Sign up" %}
     
 {% endblock content %}

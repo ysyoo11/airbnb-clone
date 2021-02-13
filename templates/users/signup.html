@@ -10,40 +10,6 @@
 
 {% block content %}
 
-<div class="continue_form">
-
-    <div class="continue_title">Sign up</div>
-
-    <form class="mb-0" method="POST" action="{% url 'users:signup' %}">
-        {% csrf_token %}
-
-        
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                {{error}}             
-            {% endfor %}
-        {% endif %}
-            
-        {% for field in form %}
-            <div class="{% if field.errors %} has_error {% endif %}">
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <span class="text-red-700 font-medium text-sm">{{error}}</span>
-                    {% endfor %}
-                {% endif %}
-                {{field}}
-            </div>
-        {% endfor %}
-        <button class="btn continue_btn">Continue</button>
-    </form>
-
-    {% include 'partials/social_login.html' %}
-
-    <div class="mt-4 ml-1">
-        <span class="mr-2 text-gray-500">Already have an account?</span>
-        <a href="{% url 'users:login' %}" class="text-gray-600 font-medium underline hover:text-gray-400">Log in</a>
-    </div>
-
-</div>
+{% include 'partials/login_form/continue_form.html' with title="Sign up" message="Already" cta="Log in" %}
     
 {% endblock content %}
