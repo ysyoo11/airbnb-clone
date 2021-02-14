@@ -3,7 +3,7 @@
 @tailwind components;
 
 .nav_link {
-  @apply flex items-center border-b-2 hover:border-gray-600 px-2 h-full;
+  @apply flex items-center border-b-2 border-white hover:border-gray-600 px-2 h-full;
   &:last-child {
     @apply ml-8;
   }
@@ -96,6 +96,41 @@
   font-size: 0px;
   line-height: 0px;
   margin: 0px 16px;
+}
+
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-70px);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(-70px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+}
+
+.message {
+  animation: messageFadeIn 4s forwards;
+  &.error {
+    @apply bg-red-600;
+  }
+  &.info {
+    @apply bg-blue-500;
+  }
+  &.success {
+    @apply bg-green-500;
+  }
+  &.warning {
+    @apply bg-yellow-500;
+  }
 }
 
 @tailwind utilities;
