@@ -39,7 +39,8 @@
 }
 
 .continue_form {
-  input {
+  input,
+  select {
     @apply flex w-full h-12 items-center rounded-md leading-10 p-3 border border-gray-400 mb-3;
     &:focus {
       @apply outline-none border-gray-700;
@@ -135,6 +136,15 @@
   }
   &.warning {
     @apply bg-yellow-500;
+  }
+}
+
+textarea {
+  resize: none;
+  height: 25vh;
+  @apply flex w-full items-center rounded-md leading-10 px-3 border border-gray-400 mb-3;
+  &:focus {
+    @apply outline-none border-gray-700;
   }
 }
 

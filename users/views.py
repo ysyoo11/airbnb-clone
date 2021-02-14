@@ -1,11 +1,12 @@
 import os
 import requests
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
 from django.core.files.base import ContentFile
 from . import forms, models
 
@@ -212,3 +213,33 @@ class UserProfileView(DetailView):
     model = models.User
     template_name = "users/profile.html"
     context_object_name = "user_obj"
+
+
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    fields = (
+        "email",
+        "first_name",
+        "last_name",
+        "gender",
+        "bio",
+        "date_of_birth",
+        "language",
+        "currency",
+    )
+    template_name = "users/user_update.html"
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        self.object.username = email
+        self.object.save()
+        return super().form_valid(form)
+
+
+class UpdatePasswordView(PasswordChangeView):
+    template_name = "users/change-password.html"
+    pass
