@@ -142,8 +142,8 @@
 }
 
 textarea {
-  resize: none;
   height: 20%;
+  resize: none;
   @apply flex w-full items-center rounded-md leading-10 px-3 border border-gray-400 mb-3;
   &:focus {
     @apply outline-none border-gray-700;

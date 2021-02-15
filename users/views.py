@@ -40,11 +40,12 @@ def log_out(request):
     return redirect(reverse("core:home"))
 
 
-class SignUpView(mixins.LoggedOutOnlyView, FormView):
+class SignUpView(mixins.LoggedOutOnlyView, SuccessMessageMixin, FormView):
 
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
+    success_message = "Welcome! 🎉"
 
     def form_valid(self, form):
         form.save()
@@ -227,7 +228,6 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
 
     model = models.User
     fields = (
-        "avatar",
         "first_name",
         "last_name",
         "email",
@@ -238,7 +238,7 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
         "currency",
     )
     template_name = "users/user_update.html"
-    success_message = "Profile updated."
+    success_message = "Profile updated 🙌🏼"
 
     def get_object(self, queryset=None):
         return self.request.user

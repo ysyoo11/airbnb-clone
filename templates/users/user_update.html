@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% load my_tags %}
 
 {% block page_title %}
@@ -13,16 +14,16 @@
 <div class="continue_form">
 
     <div class="continue_title">Profile Update</div>
-
-    <form class="mb-0" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
     
+    <form class="items-center mb-0" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
         {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}
                 <span class="text-red-700 font-medium text-sm">{{error}}</span>
             {% endfor %}
-        {% endif %}
-    
+        {% endif %}    
+
         {% for field in form %}
             {% include "partials/login_form/form_input.html" with field=field %}
         {% endfor %}

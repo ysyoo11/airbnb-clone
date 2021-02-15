@@ -50,9 +50,7 @@ class SignUpForm(forms.ModelForm):
         email = self.cleaned_data.get("email")
         try:
             models.User.objects.get(email=email)
-            raise forms.ValidationError(
-                "This email address is already used."
-            )
+            raise forms.ValidationError("This email address is already used.")
         except models.User.DoesNotExist:
             return email
 
