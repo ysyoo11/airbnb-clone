@@ -30,7 +30,7 @@
     </form>
 
     
-    {% if user.login_method == LOGIN_EMAIL %}
+    {% if user.login_method == "email" %}
         <a href="{% url 'users:password-change' %}"
             class="self-center text-green-500 font-medium underline hover:text-green-300">Change Password</a>
     {% endif %}

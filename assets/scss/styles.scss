@@ -107,24 +107,26 @@
 @keyframes messageFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-150px);
+    transform: translateY(-220px);
   }
   20% {
     opacity: 1;
-    transform: translateY(-70px);
+    transform: translateY(-60px);
   }
   90% {
     opacity: 1;
-    transform: translateY(-70px);
+    transform: translateY(-60px);
   }
   100% {
     opacity: 0;
-    transform: translateY(-150px);
+    transform: translateY(-220px);
   }
 }
 
 .message {
   animation: messageFadeIn 4s forwards;
+  width: 25%;
+  text-align: center;
   &.error {
     @apply bg-red-600;
   }
@@ -141,7 +143,7 @@
 
 textarea {
   resize: none;
-  height: 25vh;
+  height: 20%;
   @apply flex w-full items-center rounded-md leading-10 px-3 border border-gray-400 mb-3;
   &:focus {
     @apply outline-none border-gray-700;
