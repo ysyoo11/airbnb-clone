@@ -38,28 +38,64 @@
         </section>
 
         <section class="flex justify-between">
-            <div class="room_info h-75vh">
+            <div class="room_info">
                 <div class="top flex justify-between">
                     <div class="top-left flex flex-col">
                         <span class="text-2xl font-medium mb-1">{{room.room_type}} hosted by {{room.host.first_name}}</span>
-                        <span class="room_capacity font-light">{{room.guests}} guests ･ {{room.bedrooms}} bedrooms ･ {{room.beds}} beds ･ {{room.baths}} baths</span>
+                        <span class="room_capacity font-light">
+                            {{room.guests}} guest{{room.guests|pluralize}} ･ {{room.bedrooms}} bedroom{{room.bedrooms|pluralize}} ･ {{room.beds}} bed{{room.beds|pluralize}} ･ {{room.baths}} bath{{room.baths|pluralize}}</span>
                     </div>
-                    <div class="relative">
+                    <a href="{{room.host.get_absolute_url}}" class="relative">
                         {% include 'partials/user_avatar.html' with user=room.host size=16 %}
                         <i class="fas fa-check-circle text-green-400 text-sm absolute bottom-0 right-0"></i>
+                    </a>
+                </div>
+                <hr class="border-top border-gray-200 my-7">
+                <p class="font-light">
+                    {{room.description}}
+                </p>
+                <hr class="border-top border-gray-200 my-7">
+                <div class="amenities">
+                    <h4 class="font-medium text-2xl pt-4">Amenities</h4>
+                    <div class="flex flex-wrap font-light mt-6">
+                        {% for a in room.amenities.all %}
+                          <li class="w-1/2 my-1">{{a}}</li>
+                        {% endfor %}
                     </div>
                 </div>
-                <hr class="border-top border-gray-200 border-solid my-6">
-                <div class="house_rules flex flex-col">
-                    {{room.house_rule}}
+                <hr class="border-top border-gray-200 my-7">
+                <div class="house_rule">
+                    <h4 class="font-medium text-2xl pt-4">House Rules</h4>
+                    <div class="flex flex-wrap font-light mt-6">
+                        {% for r in room.house_rule.all %}
+                        <li class="w-1/2 my-1">{{r}}</li>
+                        {% endfor %}
+                    </div>
                 </div>
-                <hr class="border-top border-gray-200 border-solid my-6">
-                <div class="description">
-                    {{room.description}}
-                </div>
-                <hr class="border-top border-gray-200 border-solid my-6">
-                <div class="amenities">
-                    {{room.amenities}}
+                <hr class="border-top border-gray-200 my-7">
+                <div class="reviews">
+                    <div class="flex items-end">
+                        <h4 class="font-medium text-2xl pt-4">Reviews</h4>
+                        <span class="mx-4 text-gray-400 text-2xl">|</span>
+                        <h4 class="font-medium text-2xl pt-3">
+                            <span class="text-red-400">★</span>
+                            <span class="font-semibold">{{room.total_rating}}</span>
+                            <span class="text-gray-500">{{room.num_reviews}}</span>
+                        </h4>
+                    </div>
+                    <div class="flex flex-wrap font-light mt-6">
+                        <ul>
+                            {% for r in room.reviews.all %}
+                            <li class="mb-3 flex flex-col">
+                                <div class="flex items-center mb-2">
+                                    {% include 'partials/user_avatar.html' with user=r.user size=16 %}
+                                    <div class="ml-2 font-medium">{{r.user.first_name}}</div>
+                                </div>
+                                <p>{{r}}</p>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="room_reservation border border-gray-400 rounded-lg shadow-lg flex flex-col">
