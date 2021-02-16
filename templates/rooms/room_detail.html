@@ -86,12 +86,16 @@
                     <div class="flex flex-wrap font-light mt-6">
                         <ul>
                             {% for r in room.reviews.all %}
-                            <li class="mb-3 flex flex-col">
-                                <div class="flex items-center mb-2">
-                                    {% include 'partials/user_avatar.html' with user=r.user size=16 %}
-                                    <div class="ml-2 font-medium">{{r.user.first_name}}</div>
+                            <li class="flex flex-col">
+                                <div class="flex items-center mb-3">
+                                    {% include 'partials/user_avatar.html' with user=r.user size=16 text='2xl' %}
+                                    <div class="ml-2 flex flex-col">
+                                        <span class="font-medium">{{r.user.first_name}}</span>
+                                        <span class="text-gray-500 text-sm">{{r.created|date:"F Y"}}</span>
+                                    </div>
                                 </div>
                                 <p>{{r}}</p>
+                                <hr class="border-top border-gray-100 my-7">
                             </li>
                             {% endfor %}
                         </ul>
