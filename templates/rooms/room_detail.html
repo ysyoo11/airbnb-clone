@@ -6,27 +6,12 @@
 
 
 {% block content %}
-<div>
-    <h1>{{room.name}}</h1>
-    <h3>{{room.description}}</h1>
-</div>
-<div>
-    <h2>By <a href="{{room.host.get_absolute_url}}">{{room.host.username}}</a>
-    {% if room.host.superhost %}
-        (superhost)
-    {% endif %}
-    </h2>
-    <h3>Amenities</h3>
-    <ul>
-    {% for a in room.amenities.all %}
-    <li>{{a}}</li>
-    {% endfor %}
-    </ul>
-    <h3>House Rules</h3>
-    <ul>
-    {% for r in room.house_rule.all %}
-    <li>{{r}}</li>
-    {% endfor %}
-    </ul>
-</div>
+    <div class="container max-w-full h-50vh mb-20 flex px-20 overflow-hidden">
+        <div class="first_photo h-full w-1/2 bg-cover bg-center mr-2" style="background-image: url({{room.first_photo}});"></div>
+        <div class="h-full w-1/2 grid grid-cols-2 grid-rows-2 gap-2">
+            {% for photo in room.get_next_four_photos %}
+              <div class="four_photos w-full h-full bg-cover bg-center" style="background-image: url({{photo.file.url}});"></div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}

@@ -150,4 +150,27 @@ textarea {
   }
 }
 
+.first_photo {
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  &:hover {
+    filter: brightness(75%);
+  }
+}
+
+.four_photos {
+  transition-duration: 0.3s;
+  cursor: pointer;
+  &:hover {
+    filter: brightness(75%);
+  }
+  &:nth-child(2) {
+    border-top-right-radius: 10px;
+  }
+  &:nth-child(4) {
+    border-bottom-right-radius: 10px;
+  }
+}
+
 @tailwind utilities;
