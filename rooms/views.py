@@ -44,7 +44,6 @@ class SearchView(View):
                 instant_book = form.cleaned_data.get("instant_book")
                 superhost = form.cleaned_data.get("superhost")
                 amenities = form.cleaned_data.get("amenities")
-                print(form.cleaned_data)
 
                 filter_args = {}
 

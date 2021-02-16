@@ -1,7 +1,7 @@
 {% if user.avatar %}
-<div class="h-20 w-20 rounded-full bg-cover" style="background-image: url({{user.avatar.url}});"></div>
+    <div class="h-{{size}} w-{{size}} rounded-full bg-cover" style="background-image: url({{user.avatar.url}});"></div>
 {% else %}
-    <div class="flex items-center justify-center w-20 h-20 rounded-full bg-gray-400">
+    <div class="flex items-center justify-center w-{{size}} h-{{size}} rounded-full bg-gray-400">
         <span class="text-white font-medium text-5xl">{{user.first_name|first}}</span>
+    </div>
 {% endif %}
-</div>

@@ -6,12 +6,76 @@
 
 
 {% block content %}
-    <div class="container max-w-full h-50vh mb-20 flex px-20 overflow-hidden">
-        <div class="first_photo h-full w-1/2 bg-cover bg-center mr-2" style="background-image: url({{room.first_photo}});"></div>
-        <div class="h-full w-1/2 grid grid-cols-2 grid-rows-2 gap-2">
-            {% for photo in room.get_next_four_photos %}
-              <div class="four_photos w-full h-full bg-cover bg-center" style="background-image: url({{photo.file.url}});"></div>
-            {% endfor %}
+    <div class="container max-w-full mb-20 flex px-20 flex flex-col">
+
+        <div class="text-3xl font-medium mt-10 mb-3">{{room.name}}</div>
+
+        <div class="flex justify-between items-center text-sm mb-4">
+            <div class="flex">
+                <span class="text-red-400">★</span>
+                <a href="#"><span class="font-semibold underline">{{room.total_rating}}</span></a>
+                <span class="text-gray-500">{{room.num_reviews}}</span>
+                {% if room.host.superhost %}
+                <span class="text-gray-500">&nbsp;･ <i class="fas fa-medal text-red-400"></i>
+                    Superhost
+                </span>
+                {% endif %}
+                <span class="text-gray-500">&nbsp;･ {{room.city}} ･ {{room.country.name}}</span>
+            </div>
+            <a href="#" class="room_detail_btn text-lg">
+                <i class="far fa-heart"></i>
+                <span class="ml-1 font-semibold underline">Save</span>
+            </a>
         </div>
+
+        <section class="overflow-hidden h-50vh max-w-full flex mb-10">
+            <div class="first_photo h-full w-1/2 bg-cover bg-center mr-2" style="background-image: url({{room.first_photo}});"></div>
+            <div class="h-full w-1/2 grid grid-cols-2 grid-rows-2 gap-2">
+                {% for photo in room.get_next_four_photos %}
+                <div class="four_photos w-full h-full bg-cover bg-center" style="background-image: url({{photo.file.url}});"></div>
+                {% endfor %}
+            </div>    
+        </section>
+
+        <section class="flex justify-between">
+            <div class="room_info h-75vh">
+                <div class="top flex justify-between">
+                    <div class="top-left flex flex-col">
+                        <span class="text-2xl font-medium mb-1">{{room.room_type}} hosted by {{room.host.first_name}}</span>
+                        <span class="room_capacity font-light">{{room.guests}} guests ･ {{room.bedrooms}} bedrooms ･ {{room.beds}} beds ･ {{room.baths}} baths</span>
+                    </div>
+                    <div class="relative">
+                        {% include 'partials/user_avatar.html' with user=room.host size=16 %}
+                        <i class="fas fa-check-circle text-green-400 text-sm absolute bottom-0 right-0"></i>
+                    </div>
+                </div>
+                <hr class="border-top border-gray-200 border-solid my-6">
+                <div class="house_rules flex flex-col">
+                    {{room.house_rule}}
+                </div>
+                <hr class="border-top border-gray-200 border-solid my-6">
+                <div class="description">
+                    {{room.description}}
+                </div>
+                <hr class="border-top border-gray-200 border-solid my-6">
+                <div class="amenities">
+                    {{room.amenities}}
+                </div>
+            </div>
+            <div class="room_reservation border border-gray-400 rounded-lg shadow-lg flex flex-col">
+                <div class="flex p-6 justify-between mb-5">
+                    <div>
+                        <span class="font-medium text-2xl">${{room.price}}</span>
+                        <span class="font-light">total</span>
+                    </div>
+                    <div class="flex">
+                        <span class="text-red-400">★</span>
+                        <a href="#"><span class="font-semibold underline">{{room.total_rating}}</span></a>
+                        <span class="text-gray-500">{{room.num_reviews}}</span>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </section>
     </div>
 {% endblock content %}

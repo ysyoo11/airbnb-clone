@@ -11,7 +11,7 @@
     <div class="profile_container flex flex-col items-center">
         <div class="flex flex-col items-center justify-center">
             
-            {% include 'partials/user_avatar.html' with user=user_obj %}
+            {% include 'partials/user_avatar.html' with user=user_obj size=20 %}
             
             <div class="flex justify-center items-center">
                 <span class="text-center text-3xl mt-2">{{user_obj.first_name}}</span>
