@@ -22,12 +22,15 @@ Photos of {{room.name}}
                 <span class="text-xl">{{photo.caption}}</span>
             </div>
             <div class="flex flex-col buttons w-40">
-                <a href="#" class="btn bg-blue-400 font-medium text-white mb-6">Edit</a>
+                <a href="{% url 'rooms:edit_photo' room.pk photo.pk %}" class="btn bg-blue-400 font-medium text-white mb-6">Edit</a>
                 <a href="{% url 'rooms:delete_photo' room.pk photo.pk %}" class="btn bg-red-600 font-medium text-white">Delete</a>
             </div>
         </div>
     {% endfor %}
-
+    
+    <div class="btn btn-link">
+        <a href="{% url 'rooms:edit' room.pk %}">Back to Edit Room</a>
+    </div>
 </div>
 
 {% endblock content %}

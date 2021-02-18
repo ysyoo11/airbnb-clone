@@ -10,5 +10,5 @@
     {% for field in form %}
         {% include "mixins/room/room_input.html" with field=field %}
     {% endfor %}
-    <button class="btn continue_btn">Update room</button>
+    <button class="btn continue_btn">{{cta}}</button>
 </form>

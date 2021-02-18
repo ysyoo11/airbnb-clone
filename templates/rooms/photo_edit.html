@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block page_title %}
+    Update Photo
+{% endblock page_title %}
+
+{% block search_bar %}
+{% endblock search_bar %}
+
+{% block content %}
+
+<div class="continue_form">
+
+    <div class="continue_title">Photo Update</div>
+
+    {% include "mixins/room/room_form.html" with cta="Update photo" %}
+</div>
+
+{% endblock content %}

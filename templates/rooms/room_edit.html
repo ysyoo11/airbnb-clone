@@ -15,7 +15,7 @@ Edit Room
 
     <div class="continue_title">Room Update</div>
 
-    {% include "mixins/room/room_form.html" %}
+    {% include "mixins/room/room_form.html" with cta="Update room" %}
 
     <a href="{% url 'rooms:photos' room.pk %}"
         class="self-center text-green-500 font-medium underline mt-3 hover:text-green-300">Edit Photos</a>
