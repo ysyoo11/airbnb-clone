@@ -86,6 +86,9 @@ class Room(core_models.TimeStampedModel):
         self.city = self.city.title()
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
+
     def absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
 

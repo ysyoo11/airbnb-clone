@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block page_title %}
+Edit Room
+{% endblock page_title %}
+
+{% block search_bar %}
+{% endblock search_bar %}
+
+{% block content %}
+
+<div class="continue_form">
+
+    <div class="continue_title">Room Update</div>
+
+    {% include "mixins/room/room_form.html" %}
+
+    <a href="#"
+        class="self-center text-green-500 font-medium underline mt-3 hover:text-green-300">Edit Photos</a>
+
+</div>
+
+{% endblock content %}

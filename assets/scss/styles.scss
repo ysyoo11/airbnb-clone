@@ -90,6 +90,10 @@
   @apply justify-center bg-red-500 font-medium text-white hover:bg-red-400;
 }
 
+.edit_btn {
+  @apply justify-center bg-red-500 font-medium text-white hover:bg-red-400;
+}
+
 .hr-sect {
   @apply flex items-center text-gray-400 text-xs my-4;
 }

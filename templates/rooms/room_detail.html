@@ -94,7 +94,7 @@
                                         <span class="text-gray-500 text-sm">{{r.created|date:"F Y"}}</span>
                                     </div>
                                 </div>
-                                <p>{{r}}</p>
+                                <p class="text-gray-600">{{r}}</p>
                                 <hr class="border-top border-gray-100 my-7">
                             </li>
                             {% endfor %}
@@ -102,19 +102,28 @@
                     </div>
                 </div>
             </div>
-            <div class="room_reservation border border-gray-400 rounded-lg shadow-lg flex flex-col">
-                <div class="flex p-6 justify-between mb-5">
-                    <div>
-                        <span class="font-medium text-2xl">${{room.price}}</span>
-                        <span class="font-light">total</span>
+            <div class="flex flex-col w-1/3">
+                
+                {% if user == room.host %}
+                    <div class="w-full">
+                        <a class="btn edit_btn" href="{% url 'rooms:edit' room.pk %}">Edit Room</a>
                     </div>
-                    <div class="flex">
-                        <span class="text-red-400">★</span>
-                        <a href="#"><span class="font-semibold underline">{{room.total_rating}}</span></a>
-                        <span class="text-gray-500">{{room.num_reviews}}</span>
+                {% else %}
+                    <div class="border border-gray-400 rounded-lg shadow-lg flex flex-col">
+                        <div class="flex p-6 justify-between mb-5">
+                            <div>
+                                <span class="font-medium text-2xl">${{room.price}}</span>
+                                <span class="font-light">total</span>
+                            </div>
+                            <div class="flex">
+                                <span class="text-red-400">★</span>
+                                <a href="#"><span class="font-semibold underline">{{room.total_rating}}</span></a>
+                                <span class="text-gray-500">{{room.num_reviews}}</span>
+                            </div>
+                        </div>
+                        <div></div>
                     </div>
-                </div>
-                <div></div>
+                {% endif %}  
             </div>
         </section>
     </div>

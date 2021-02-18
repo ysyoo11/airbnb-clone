@@ -1,7 +1,9 @@
-from django.views.generic import ListView, DetailView, View
+from django.http import Http404
+from django.views.generic import ListView, DetailView, View, UpdateView
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from . import models, forms
+from users import mixins as user_mixins
 
 
 class HomeView(ListView):
@@ -15,7 +17,7 @@ class HomeView(ListView):
     context_object_name = "rooms"
 
 
-class RoomDetail(DetailView):
+class RoomDetailView(DetailView):
 
     """ RoomDetail Definition """
 
@@ -100,3 +102,67 @@ class SearchView(View):
             form = forms.SearchForm()
 
         return render(request, "rooms/room_search.html", {"form": form})
+
+
+class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
+
+    """ EditRoomView Definition """
+
+    model = models.Room
+    fields = (
+        "name",
+        "description",
+        "country",
+        "city",
+        "price",
+        "address",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "room_type",
+        "amenities",
+        "house_rule",
+    )
+    template_name = "rooms/room_edit.html"
+    success_message = "Room updated ✨"
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["name"].widget.attrs = {"placeholder": "Room name"}
+        form.fields["description"].widget.attrs = {"placeholder": "Description"}
+        form.fields["city"].widget.attrs = {"placeholder": "City"}
+        form.fields["price"].widget.attrs = {"placeholder": "Price per night"}
+        form.fields["address"].widget.attrs = {"placeholder": "Address"}
+        form.fields["guests"].widget.attrs = {"placeholder": "Max number of guests"}
+        form.fields["beds"].widget.attrs = {"placeholder": "Number of beds"}
+        form.fields["bedrooms"].widget.attrs = {"placeholder": "Number of bedrooms"}
+        form.fields["baths"].widget.attrs = {"placeholder": "Number of baths"}
+        form.fields["check_in"].widget.attrs = {"placeholder": "Check-in time"}
+        form.fields["check_out"].widget.attrs = {"placeholder": "Check-out time"}
+        return form
+
+    def form_valid(self, form):
+        self.object.save()
+        return super().form_valid(form)
+
+
+class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
+
+    model = models.Room
+    template_name = "rooms/room_photos.html"
+
+    def get_object(self, queryset=None):
+        room = super().get_object(queryset=queryset)
+        if room.host.pk != self.request.user.pk:
+            raise Http404()
+        return room
