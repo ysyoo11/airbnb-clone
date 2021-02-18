@@ -17,7 +17,7 @@ Edit Room
 
     {% include "mixins/room/room_form.html" %}
 
-    <a href="#"
+    <a href="{% url 'rooms:photos' room.pk %}"
         class="self-center text-green-500 font-medium underline mt-3 hover:text-green-300">Edit Photos</a>
 
 </div>
