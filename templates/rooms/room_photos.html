@@ -23,7 +23,7 @@ Photos of {{room.name}}
             </div>
             <div class="flex flex-col buttons w-40">
                 <a href="#" class="btn bg-blue-400 font-medium text-white mb-6">Edit</a>
-                <a href="#" class="btn bg-red-600 font-medium text-white">Delete</a>
+                <a href="{% url 'rooms:delete_photo' room.pk photo.pk %}" class="btn bg-red-600 font-medium text-white">Delete</a>
             </div>
         </div>
     {% endfor %}
