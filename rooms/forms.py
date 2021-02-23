@@ -24,3 +24,15 @@ class SearchForm(forms.Form):
         queryset=models.Amenity.objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+
+
+class CreatePhotoForm(forms.ModelForm):
+    class Meta:
+        model = models.Photo
+        fields = ("file", "caption")
+
+    def save(self, pk, *args, **kwargs):
+        photo = super().save(commit=False)
+        room = models.Room.objects.get(pk=pk)
+        photo.room = room
+        photo.save()
