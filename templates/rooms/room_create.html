@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block page_title %}
+Create a Room
+{% endblock page_title %}
+
+{% block search_bar %}
+{% endblock search_bar %}
+
+{% block content %}
+
+<div class="continue_form">
+
+    <div class="continue_title">New Room</div>
+
+    {% include "mixins/room/room_form.html" with cta="Upload" %}
+
+</div>
+
+{% endblock content %}
