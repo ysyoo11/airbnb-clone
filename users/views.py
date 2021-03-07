@@ -87,7 +87,7 @@ class GithubException(Exception):
 def github_callback(request):
     try:
         client_id = os.environ.get("GITHUB_ID")
-        client_secret = os.environ.get("GITHUB_SECRET")
+        client_secret = os.environ.get("GITHUB_SECRET2")
         code = request.GET.get("code", None)
         if code is not None:
             token_request = requests.post(
@@ -115,12 +115,12 @@ def github_callback(request):
                     bio = profile_json.get("bio")
                     try:
                         user = models.User.objects.get(email=email)
-                        admin = models.User.objects.get(
-                            email=os.environ.get("ADMIN_EMAIL")
+                        superuser = models.User.objects.get(
+                            email=os.environ.get("SUPERUSER_EMAIL")
                         )
                         if user.login_method != models.User.LOGIN_GITHUB:
                             # When a user already has the account with other method
-                            if user == admin:
+                            if user == superuser:
                                 login(request, user)
                                 messages.success(
                                     request, f"Welcome back, {user.first_name}!"
