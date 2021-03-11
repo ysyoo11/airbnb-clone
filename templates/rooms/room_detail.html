@@ -123,13 +123,26 @@
                                 <span class="text-gray-500">{{room.num_reviews}}</span>
                             </div>
                         </div>
-                        <div>
+                        <div class="w-full flex flex-col items-center">
                             {% for calendar in room.get_calendars %}
-                            <div>
-                              {{calendar.get_month}}/{{calendar.year}}
-                              {% for day in calendar.day_names %}
-                                {{day}}
-                              {% endfor %}
+                            <div class="mb-20 w-3/4">
+                                <span class="text-center font-medium text-lg block mb-6">{{calendar.get_month}} {{calendar.year}}</span>
+                                <div class="cal-grid mb-4">
+                                    {% for day in calendar.day_names %}
+                                        <span class="text-center text-gray-400 font-medium cursor-default">{{day}}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="cal-grid">
+                                    {% for day in calendar.get_days %}
+                                        {% if day != 0 %}
+                                            <div class="text-center rounded py-1 font-medium bg-gray-100 hover:bg-red-400 hover:text-white cursor-pointer">
+                                                {{day}}
+                                            </div>
+                                        {% else %}
+                                            <div></div>
+                                        {% endif %}  
+                                    {% endfor %}
+                                </div>
                             </div>
                             {% endfor %}
                         </div>
