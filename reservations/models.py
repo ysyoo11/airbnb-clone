@@ -13,6 +13,9 @@ class BookedDay(core_models.TimeStampedModel):
         verbose_name = "Booked Day"
         verbose_name_plural = "Booked Days"
 
+    def __str__(self):
+        return str(self.day)
+
 
 class Reservation(core_models.TimeStampedModel):
 
@@ -39,6 +42,9 @@ class Reservation(core_models.TimeStampedModel):
     room = models.ForeignKey(
         "rooms.Room", related_name="reservations", on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return f"{self.room} - {self.check_in}"
 
     def check_progress(self):
         now = timezone.now().date()
