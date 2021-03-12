@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load sexy_capitals %}
+
 {% block page_title %}
   {{room.name}} | Airbnb
 {% endblock page_title %}
@@ -109,7 +111,7 @@
                         <a class="btn edit_btn" href="{% url 'rooms:edit' room.pk %}">Edit Room</a>
                     </div>
                 {% else %}
-
+                    {{'something'|sexy_capitals}}
                     {% if not request.session.is_hosting %}
                     <div class="border border-gray-400 rounded-lg shadow-lg flex flex-col">
                         <div class="flex p-6 justify-between mb-5">
