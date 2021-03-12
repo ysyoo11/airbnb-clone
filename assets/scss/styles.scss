@@ -3,10 +3,7 @@
 @tailwind components;
 
 .nav_link {
-  @apply flex items-center border-b-2 border-white hover:border-gray-600 px-2 h-full;
-  &:last-child {
-    @apply ml-8;
-  }
+  @apply flex items-center border-b-2 border-white hover:border-gray-600 px-2 h-full ml-8;
 }
 
 .room_card {
