@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block page_title %}
+    Reservation {{reservation.check_in}}
+{% endblock page_title %}
+
+{% block search_bar %}
+{% endblock search_bar %}
+
+{% block content %}
+
+<div class="container mx-auto my-10 flex flex-col items-center rounded-2xl p-6 mt-32">
+
+    <div class="continue_title">Your Reservation</div>
+
+    <div class="border border-gray-200 rounded-xl overflow-hidden">
+
+        <div class="w-full h-80 bg-cover bg-center border-b border-gray-200" style="background-image: url({{reservation.room.first_photo}});"></div>
+
+        <div class="px-8 py-10 border-b border-gray-200">    
+            <div class="mb-4 text-xl text-gray-500">
+            {% if reservation.get_month_day == "12-31" %}
+                Dec 31, {{reservation.check_in.year}} - Jan 1, {{reservation.check_out.year}}
+            {% else %}
+                {{reservation.get_check_in_month}} {{reservation.check_in.day}} - {{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}
+            {% endif %}
+                 ･ {{reservation.guest}}
+            </div>
+            <div class="font-semibold text-3xl text-gray-600">{{reservation.room.name}}</div>
+        </div>
+
+        <div class="px-8 py-10 flex w-full border-b border-gray-200">
+            <div class="flex flex-col items-center mr-6">
+                {% include 'partials/user_avatar.html' with user=reservation.room.host size=32 %}
+                <div class="text-gray-500 mt-4 text-2xl">{{reservation.room.host.first_name}}</div>
+            </div>
+            <div class="flex flex-col justify-between w-full">
+                <span class="font-medium text-2xl text-gray-600">Contact Your Airbnb Host</span>
+                <span class="text-2xl text-gray-500">Your host is the best person to contact for questions about your reservation.</span>
+                <a href="#" class="btn w-1/2 bg-blue-400 text-white cursor-pointer text-xl font-medium hover:bg-blue-300">Send a Message</a>
+            </div>
+        </div>
+
+        <div class="px-8 py-10">
+            <span class="block text-gray-500 text-xl mb-4">Want to cancel this reservation?</span>
+            <a href="#" class="text-red-400 text-xl font-medium underline hover:text-red-300">Cancel Reservation</a>
+        </div>
+
+    </div>
+    
+</div>
+
+{% endblock content %}

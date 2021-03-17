@@ -1,5 +1,5 @@
 {% if user.avatar %}
-    <div class="h-{{size}} w-{{size}} rounded-full bg-cover" style="background-image: url({{user.avatar.url}});"></div>
+    <div class="h-{{size}} w-{{size}} rounded-full bg-cover bg-center border border-gray-200" style="background-image: url({{user.avatar.url}});"></div>
 {% else %}
     <div class="flex items-center justify-center w-{{size}} h-{{size}} rounded-full bg-gray-400">
         <span class="text-white font-medium {{text|default:'text-5xl'}}">{{user.first_name|first}}</span>

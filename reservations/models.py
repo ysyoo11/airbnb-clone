@@ -77,3 +77,15 @@ class Reservation(core_models.TimeStampedModel):
                     BookedDay.objects.create(day=day, reservation=self)
                 return
         return super().save(*args, **kwargs)
+
+    def get_check_in_month(self):
+        month = self.check_in.strftime("%B")[:3]
+        return month
+
+    def get_check_out_month(self):
+        month = self.check_out.strftime("%B")[:3]
+        return month
+
+    def get_month_day(self):
+        month_day = self.check_in.strftime("%m-%d")
+        return month_day
