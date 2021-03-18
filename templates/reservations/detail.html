@@ -21,12 +21,13 @@
 
         <div class="px-8 py-10 border-b border-gray-200">    
             <div class="mb-4 text-xl text-gray-500">
-            {% if reservation.get_month_day == "12-31" %}
-                Dec 31, {{reservation.check_in.year}} - Jan 1, {{reservation.check_out.year}}
-            {% else %}
-                {{reservation.get_check_in_month}} {{reservation.check_in.day}} - {{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}
-            {% endif %}
-                 ･ {{reservation.guest}}
+                {% if reservation.get_month_day == "12-31" %}
+                    Dec 31, {{reservation.check_in.year}} - Jan 1, {{reservation.check_out.year}}
+                {% else %}
+                    {{reservation.get_check_in_month}} {{reservation.check_in.day}} - {{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}
+                {% endif %}
+
+                <span class="ml-5 font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-400 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</span>
             </div>
             <div class="font-semibold text-3xl text-gray-600">{{reservation.room.name}}</div>
         </div>
@@ -39,13 +40,21 @@
             <div class="flex flex-col justify-between w-full">
                 <span class="font-medium text-2xl text-gray-600">Contact Your Airbnb Host</span>
                 <span class="text-2xl text-gray-500">Your host is the best person to contact for questions about your reservation.</span>
-                <a href="#" class="btn w-1/2 bg-blue-400 text-white cursor-pointer text-xl font-medium hover:bg-blue-300">Send a Message</a>
+                {% if reservation.room.host != user %}
+                    <a href="#" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">Send a Message</a>
+                {% endif %}
             </div>
         </div>
 
-        <div class="px-8 py-10">
-            <span class="block text-gray-500 text-xl mb-4">Want to cancel this reservation?</span>
-            <a href="#" class="text-red-400 text-xl font-medium underline hover:text-red-300">Cancel Reservation</a>
+        <div class="px-8 py-10 flex justify-evenly">
+            
+            {% if reservation.status == 'pending' %}
+                {% if reservation.room.host == user %}
+                    <a href="#" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
+                {% endif %}
+                <a href="#" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
+            {% endif %}
+                    
         </div>
 
     </div>
