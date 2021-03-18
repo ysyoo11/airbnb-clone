@@ -50,9 +50,9 @@
             
             {% if reservation.status == 'pending' %}
                 {% if reservation.room.host == user %}
-                    <a href="#" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
+                    <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
                 {% endif %}
-                <a href="#" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
+                <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
             {% endif %}
                     
         </div>
