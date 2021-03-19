@@ -201,4 +201,16 @@ textarea {
   grid-gap: 10px;
 }
 
+.review_form {
+  @apply flex flex-col;
+  label {
+    @apply font-medium text-gray-500 text-lg;
+  }
+  input {
+    @apply flex w-full h-12 items-center rounded-md leading-10 p-3 border border-gray-400 mb-3;
+    &:focus {
+      @apply outline-none border-gray-700;
+    }
+  }
+}
 @tailwind utilities;

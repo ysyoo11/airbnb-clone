@@ -46,15 +46,31 @@
             </div>
         </div>
 
-        <div class="px-8 py-10 flex justify-evenly">
-            
-            {% if reservation.status == 'pending' %}
-                {% if reservation.room.host == user %}
-                    <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
-                {% endif %}
-                <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
-            {% endif %}
+        <div class="px-8 py-10 flex {% if reservation.status != 'confirmed' %}justify-evenly{% endif %}">
+
+            {% if reservation.status != 'canceled' %}
+                
+                {% if reservation.status == 'confirmed' and reservation.is_finished %}
+                <div class="w-full flex flex-col items-center">
+                    <div class="text-3xl text-gray-600 mb-10 font-semibold py-5 px-12 border-b-2 border-gray-200">Write a Review</div>
+                    <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="review_form w-1/2 h-50vh">
+                        {% csrf_token %}
+                        {{form}}
+                        <button class="btn bg-blue-400 text-white font-medium mt-6 hover:bg-blue-300">Submit</button>
+                    </form>
+                </div>
+                {% else %}
                     
+                    {% if reservation.status == 'pending' %}
+                        {% if reservation.room.host == user %}
+                            <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
+                        {% endif %}
+                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
+                    {% endif %}
+
+                {% endif %}
+                    
+            {% endif %}
         </div>
 
     </div>
