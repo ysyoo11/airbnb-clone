@@ -17,3 +17,7 @@ class CreateReviewForm(forms.ModelForm):
             "value",
             "review",
         )
+
+    def save(self):
+        review = super().save(commit=False)
+        return review
