@@ -1,3 +1,11 @@
-<footer class="container mx-auto flex justify-center items-center h-20 border-t font-medium text-gray-500">
-  <span>&copy; 2021 Airbnb Clone, Inc. All rights reserved</span>
+{% load i18n %}
+
+<footer class="container mx-auto flex justify-center items-center h-20 border-t font-medium text-gray-500 relative">
+  <span>&copy; 2021 Airbnb Clone, Inc. {% trans "All rights reserved" %}.</span>
+  <select name="language" id="js-lang" class="ml-8 w-28 place-self-center absolute right-2 outline-none">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+    <option value="ko">Korean</option>
+    <option value="jp">Japanese</option>
+  </select>
 </footer>
