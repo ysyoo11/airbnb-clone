@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from django.utils import translation
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
@@ -11,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.core.files.base import ContentFile
+from config import settings
 from . import forms, models, mixins
 
 
@@ -297,5 +299,7 @@ def switch_hosting(request):
 def switch_language(request):
     lang = request.GET.get("lang", None)
     if lang is not None:
-        pass
-    return HttpResponse(status=200)
+        translation.activate(lang)
+        response = HttpResponse(200)
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang)
+    return response

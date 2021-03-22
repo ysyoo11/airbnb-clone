@@ -2,10 +2,10 @@
 
 <footer class="container mx-auto flex justify-center items-center h-20 border-t font-medium text-gray-500 relative">
   <span>&copy; 2021 Airbnb Clone, Inc. {% trans "All rights reserved" %}.</span>
+  {% get_current_language as LANGUAGE_CODE %}
   <select name="language" id="js-lang" class="ml-8 w-28 place-self-center absolute right-2 outline-none">
-    <option value="en">English</option>
-    <option value="es">Spanish</option>
-    <option value="ko">Korean</option>
-    <option value="jp">Japanese</option>
+    <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>English</option>
+    <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>Spanish</option>
+    <option value="ko" {% if LANGUAGE_CODE == 'ko' %} selected {% endif %}>Korean</option>
   </select>
 </footer>
