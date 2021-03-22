@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load my_tags %}
+{% load my_tags i18n %}
 
 {% block page_title %}
     Update Photo
@@ -13,7 +13,7 @@
 
 <div class="continue_form">
 
-    <div class="continue_title">Photo Update</div>
+    <div class="continue_title">{% trans "Photo Update" %}</div>
 
     {% include "mixins/room/room_form.html" with cta="Update photo" %}
 </div>

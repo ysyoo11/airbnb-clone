@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load my_tags %}
+{% load my_tags i18n %}
 
 {% block page_title %}
 Create a Room
@@ -13,7 +13,7 @@ Create a Room
 
 <div class="continue_form">
 
-    <div class="continue_title">New Room</div>
+    <div class="continue_title">{% trans "New Room" %}</div>
 
     {% include "mixins/room/room_form.html" with cta="Upload" %}
 

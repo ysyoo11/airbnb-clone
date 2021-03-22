@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load my_tags %}
+{% load my_tags i18n %}
 
 {% block page_title %}
     Reservation {{reservation.check_in}}
@@ -13,7 +13,7 @@
 
 <div class="container mx-auto my-10 flex flex-col items-center rounded-2xl p-6 mt-32">
 
-    <div class="continue_title">Your Reservation</div>
+    <div class="continue_title">{% trans "Your Reservation" %}</div>
 
     <div class="border border-gray-200 rounded-xl overflow-hidden">
 
@@ -38,10 +38,10 @@
                 <div class="text-gray-500 mt-4 text-2xl">{{reservation.room.host.first_name}}</div>
             </div>
             <div class="flex flex-col justify-between w-full">
-                <span class="font-medium text-2xl text-gray-600">Contact Your Airbnb Host</span>
-                <span class="text-2xl text-gray-500">Your host is the best person to contact for questions about your reservation.</span>
+                <span class="font-medium text-2xl text-gray-600">{% trans "Contact Your Airbnb Host" %}</span>
+                <span class="text-2xl text-gray-500">{% trans "Your host is the best person to contact for questions about your reservation." %}</span>
                 {% if reservation.room.host != user %}
-                    <a href="#" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">Send a Message</a>
+                    <a href="#" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -52,20 +52,20 @@
                 
                 {% if reservation.status == 'confirmed' and reservation.is_finished %}
                 <div class="w-full flex flex-col items-center">
-                    <div class="text-3xl text-gray-600 mb-10 font-semibold py-5 px-12 border-b-2 border-gray-200">Write a Review</div>
+                    <div class="text-3xl text-gray-600 mb-10 font-semibold py-5 px-12 border-b-2 border-gray-200">{% trans "Write a Review" %}</div>
                     <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="review_form w-1/2 h-50vh">
                         {% csrf_token %}
                         {{form}}
-                        <button class="btn bg-blue-400 text-white font-medium mt-6 hover:bg-blue-300">Submit</button>
+                        <button class="btn bg-blue-400 text-white font-medium mt-6 hover:bg-blue-300">{% trans "Submit" %}</button>
                     </form>
                 </div>
                 {% else %}
                     
                     {% if reservation.status == 'pending' %}
                         {% if reservation.room.host == user %}
-                            <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">Confirm Reservation</a>
+                            <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">{% trans "Confirm Reservation" %}</a>
                         {% endif %}
-                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">Cancel Reservation</a>
+                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">{% trans "Cancel Reservation" %}</a>
                     {% endif %}
 
                 {% endif %}

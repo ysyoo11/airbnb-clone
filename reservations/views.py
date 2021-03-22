@@ -1,6 +1,7 @@
 import datetime
 from django.http import Http404
 from django.views.generic import View
+from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
 from rooms import models as room_models
@@ -19,7 +20,7 @@ def create(request, room, year, month, day):
         models.BookedDay.objects.get(day=date_obj, reservation__room=room)
         raise CreateError()
     except (room_models.Room.DoesNotExist, CreateError):
-        messages.error(request, "Access denied.")
+        messages.error(request, _("Access denied."))
         return redirect(reverse("core:home"))
     except models.BookedDay.DoesNotExist:
         reservation = models.Reservation.objects.create(
@@ -61,5 +62,5 @@ def edit_reservation(request, pk, verb):
         reservation.status = models.Reservation.STATUS_CANCELED
         models.BookedDay.objects.filter(reservation=reservation).delete()
     reservation.save()
-    messages.success(request, "Reservation Updated.")
+    messages.success(request, _("Reservation Updated."))
     return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))

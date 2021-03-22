@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load is_booked %}
+{% load is_booked i18n %}
 
 {% block page_title %}
   {{room.name}} | Airbnb
@@ -26,7 +26,7 @@
             </div>
             <a href="#" class="room_detail_btn text-lg">
                 <i class="far fa-heart"></i>
-                <span class="ml-1 font-semibold underline">Save</span>
+                <span class="ml-1 font-semibold underline">{% trans "Save" %}</span>
             </a>
         </div>
 
@@ -43,7 +43,9 @@
             <div class="room_info">
                 <div class="top flex justify-between">
                     <div class="top-left flex flex-col">
-                        <span class="text-2xl font-medium mb-1">{{room.room_type}} hosted by {{room.host.first_name}}</span>
+                        <span class="text-2xl font-medium mb-1">
+                            {% blocktrans with room_type=room.room_type host_name=room.host.first_name %}{{room_type}} hosted by {{host_name}}{% endblocktrans %}
+                        </span>
                         <span class="room_capacity font-light">
                             {{room.guests}} guest{{room.guests|pluralize}} ･ {{room.bedrooms}} bedroom{{room.bedrooms|pluralize}} ･ {{room.beds}} bed{{room.beds|pluralize}} ･ {{room.baths}} bath{{room.baths|pluralize}}</span>
                     </div>
@@ -58,7 +60,7 @@
                 </p>
                 <hr class="border-top border-gray-200 my-7">
                 <div class="amenities">
-                    <h4 class="font-medium text-2xl pt-4">Amenities</h4>
+                    <h4 class="font-medium text-2xl pt-4">{% trans "Amenities" %}</h4>
                     <div class="flex flex-wrap font-light mt-6">
                         {% for a in room.amenities.all %}
                           <li class="w-1/2 my-1">{{a}}</li>
@@ -67,7 +69,7 @@
                 </div>
                 <hr class="border-top border-gray-200 my-7">
                 <div class="house_rule">
-                    <h4 class="font-medium text-2xl pt-4">House Rules</h4>
+                    <h4 class="font-medium text-2xl pt-4">{% trans "House Rules" %}</h4>
                     <div class="flex flex-wrap font-light mt-6">
                         {% for r in room.house_rule.all %}
                         <li class="w-1/2 my-1">{{r}}</li>
@@ -77,7 +79,7 @@
                 <hr class="border-top border-gray-200 my-7">
                 <div class="reviews">
                     <div class="flex items-end">
-                        <h4 class="font-medium text-2xl pt-4">Reviews</h4>
+                        <h4 class="font-medium text-2xl pt-4">{% trans "Reviews" %}</h4>
                         <span class="mx-4 text-gray-400 text-2xl">|</span>
                         <h4 class="font-medium text-2xl pt-3">
                             <span class="text-red-400">★</span>
@@ -108,7 +110,7 @@
                 
                 {% if user == room.host %}
                     <div class="w-full">
-                        <a class="btn edit_btn" href="{% url 'rooms:edit' room.pk %}">Edit Room</a>
+                        <a class="btn edit_btn" href="{% url 'rooms:edit' room.pk %}">{% trans "Edit Room" %}</a>
                     </div>
                 {% else %}
                     {% if not request.session.is_hosting %}

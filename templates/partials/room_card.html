@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="room_card">
     <a href="{% url 'rooms:detail' room.pk %}">
         <div class="relative w-full mb-2 h-25vh bg-cover bg-center rounded-lg" style="background-image: url({{room.first_photo}});">
@@ -16,7 +18,7 @@
         <div class="inline-block overflow-ellipsis whitespace-nowrap overflow-hidden w-full">{{room.name}}</div>
         <div>
             <span class="font-bold">${{room.price}} AUD</span>
-            <span>/ night</span>
+            <span>{% trans "/ night" %}</span>
         </div>
     </a>
 </div>

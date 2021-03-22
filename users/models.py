@@ -1,4 +1,5 @@
 import uuid
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db import models
@@ -17,9 +18,9 @@ class User(AbstractUser):
     GENDER_OTHER = "other"
 
     GENDER_CHOICES = (
-        (GENDER_MALE, "Male"),
-        (GENDER_FEMALE, "Female"),
-        (GENDER_OTHER, "Other"),
+        (GENDER_MALE, _("Male")),
+        (GENDER_FEMALE, _("Female")),
+        (GENDER_OTHER, _("Other")),
     )
 
     LANGUAGE_ENGLISH = "en"
@@ -27,9 +28,9 @@ class User(AbstractUser):
     LANGUAGE_JAPANESE = "jp"
 
     LANGUAGE_CHOICES = (
-        (LANGUAGE_ENGLISH, "English"),
-        (LANGUAGE_KOREAN, "Korean"),
-        (LANGUAGE_JAPANESE, "Japanese"),
+        (LANGUAGE_ENGLISH, _("English")),
+        (LANGUAGE_KOREAN, _("Korean")),
+        (LANGUAGE_JAPANESE, _("Japanese")),
     )
 
     CURRENCY_USD = "usd"
@@ -55,20 +56,32 @@ class User(AbstractUser):
     )
 
     avatar = models.ImageField(upload_to="avatars", blank=True)
-    gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
-    bio = models.TextField(blank=True)
-    date_of_birth = models.DateField(blank=True, null=True)
+    gender = models.CharField(
+        _("gender"), choices=GENDER_CHOICES, max_length=10, blank=True
+    )
+    bio = models.TextField(_("bio"), blank=True)
+    date_of_birth = models.DateField(_("date_of_birth"), blank=True, null=True)
     language = models.CharField(
-        choices=LANGUAGE_CHOICES, max_length=2, blank=True, default=LANGUAGE_ENGLISH
+        _("language"),
+        choices=LANGUAGE_CHOICES,
+        max_length=2,
+        blank=True,
+        default=LANGUAGE_ENGLISH,
     )
     currency = models.CharField(
-        choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_AUD
+        _("currency"),
+        choices=CURRENCY_CHOICES,
+        max_length=3,
+        blank=True,
+        default=CURRENCY_AUD,
     )
-    superhost = models.BooleanField(default=False)
-    email_verified = models.BooleanField(default=False)
-    email_code = models.CharField(max_length=20, default="", blank=True)
+    superhost = models.BooleanField(_("superhost"), default=False)
+    email_verified = models.BooleanField(_("email_verified"), default=False)
+    email_code = models.CharField(
+        _("email_code"), max_length=20, default="", blank=True
+    )
     login_method = models.CharField(
-        max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
+        _("login_method"), max_length=50, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
     )
 
     def get_absolute_url(self):
@@ -83,7 +96,7 @@ class User(AbstractUser):
                 "emails/verify_email.html", {"code": code, "first_name": first_name}
             )
             send_mail(
-                "Verify Airbnb account",
+                _("Verify Airbnb account"),
                 strip_tags(html_message),
                 settings.EMAIL_FROM,
                 [self.email],

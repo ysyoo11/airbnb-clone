@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load my_tags %}
+{% load my_tags i18n %}
 
 {% block page_title %}
 {{user_obj.first_name}}'s Profile
@@ -24,7 +24,7 @@
             
             {% if user == user_obj %}    
                 <a href="{% url 'users:update_profile' %}" class="btn-link">
-                    <span>Edit Profile</span>
+                    <span>{% trans "Edit Profile" %}</span>
                 </a>
             {% endif %}
                 
@@ -35,7 +35,9 @@
     {% if user_obj.rooms.count > 0 %}
         <div class="container mx-auto flex flex-col items-center">
             <div class="text-2xl mb-7 ml-2 p-2 border-b-2 border-gray-400 self-start">
-                <h3>{{user_obj.first_name}}'s Rooms</h3>
+                <h3>
+                    {% blocktrans with first_name=user_obj.first_name %}{{first_name}}'s Rooms{% endblocktrans %}
+                </h3>
             </div>
             <div class="flex flex-wrap w-full -mx-2 mb-10">
                 {% for room in user_obj.rooms.all %}

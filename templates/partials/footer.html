@@ -5,7 +5,6 @@
   {% get_current_language as LANGUAGE_CODE %}
   <select name="language" id="js-lang" class="ml-8 w-28 place-self-center absolute right-2 outline-none">
     <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>English</option>
-    <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>Spanish</option>
     <option value="ko" {% if LANGUAGE_CODE == 'ko' %} selected {% endif %}>Korean</option>
   </select>
 </footer>
