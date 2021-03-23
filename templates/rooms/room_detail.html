@@ -24,7 +24,7 @@
                 {% endif %}
                 <span class="text-gray-500">&nbsp;･ {{room.city}} ･ {{room.country.name}}</span>
             </div>
-            <a href="#" class="room_detail_btn text-lg">
+            <a href="{% url 'lists:save_room' room.pk %}" class="room_detail_btn text-lg">
                 <i class="far fa-heart"></i>
                 <span class="ml-1 font-semibold underline">{% trans "Save" %}</span>
             </a>
