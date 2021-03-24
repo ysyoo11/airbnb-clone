@@ -9,23 +9,28 @@
 
 <div class="{% if user_obj.rooms.count == 0 %} h-75vh {% endif %}">
     <div class="profile_container flex flex-col items-center">
-        <div class="flex flex-col items-center justify-center">
+        <div class="flex flex-col items-center justify-center w-full">
             
-            {% include 'partials/user_avatar.html' with user=user_obj size=20 %}
+            {% include 'partials/user_avatar.html' with user=user_obj size=28 %}
             
             <div class="flex justify-center items-center">
                 <span class="text-center text-3xl mt-2">{{user_obj.first_name}}</span>
                 {% if user_obj.superhost %}
                     <i class="fas fa-check-circle text-green-400 text-2xl ml-2"></i>
-                {% endif %}   
+                {% endif %}
             </div>
 
-            <span class="w-full mt-2 py-2 text-lg mb-5">{{user_obj.bio}}</span>
+            <span class="w-full mt-2 py-2 text-lg mb-5 text-center text-gray-600">{{user_obj.bio}}</span>
             
-            {% if user == user_obj %}    
-                <a href="{% url 'users:update_profile' %}" class="btn-link">
-                    <span>{% trans "Edit Profile" %}</span>
-                </a>
+            {% if user == user_obj %}
+                <div class="flex w-full justify-evenly">
+                    <a href="{% url 'lists:my_lists' %}" class="btn w-1/3 bg-red-400 text-white font-medium hover:bg-red-300">
+                        <span>{% trans "My Favourites" %}</span>
+                    </a>
+                    <a href="{% url 'users:update_profile' %}" class="btn w-1/3 bg-blue-400 text-white font-medium hover:bg-blue-300">
+                        <span>{% trans "Edit Profile" %}</span>
+                    </a>
+                </div>
             {% endif %}
                 
         </div>

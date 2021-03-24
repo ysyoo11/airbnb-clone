@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-24 12:39+0900\n"
+"POT-Creation-Date: 2021-03-25 01:34+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,28 +172,28 @@ msgstr "새로운 숙소"
 msgid "Saved"
 msgstr "저장됨"
 
-#: templates/rooms/room_detail.html:34
+#: templates/rooms/room_detail.html:36
 msgid "Save"
 msgstr "저장하기"
 
-#: templates/rooms/room_detail.html:53
+#: templates/rooms/room_detail.html:55
 #, python-format
 msgid "%(room_type)s hosted by %(host_name)s"
 msgstr "%(host_name)s의 %(room_type)s 타입 숙소"
 
-#: templates/rooms/room_detail.html:69
+#: templates/rooms/room_detail.html:71
 msgid "Amenities"
 msgstr "어메니티"
 
-#: templates/rooms/room_detail.html:78
+#: templates/rooms/room_detail.html:80
 msgid "House Rules"
 msgstr "하우스 룰"
 
-#: templates/rooms/room_detail.html:88
+#: templates/rooms/room_detail.html:90
 msgid "Reviews"
 msgstr "리뷰"
 
-#: templates/rooms/room_detail.html:119
+#: templates/rooms/room_detail.html:121
 msgid "Edit Room"
 msgstr "방 편집하기"
 
@@ -263,13 +263,15 @@ msgstr "비밀번호 업데이트"
 msgid "Change password"
 msgstr "비밀번호 변경"
 
-#: templates/users/profile.html:27
-#, fuzzy
-#| msgid "Profile"
+#: templates/users/profile.html:28
+msgid "My Favourites"
+msgstr "저장된 숙소들"
+
+#: templates/users/profile.html:31
 msgid "Edit Profile"
 msgstr "프로필 편집"
 
-#: templates/users/profile.html:39
+#: templates/users/profile.html:44
 #, python-format
 msgid "%(first_name)s's Rooms"
 msgstr "%(first_name)s의 숙소"
