@@ -210,7 +210,6 @@ def kakao_callback(request):
                 user.save()
                 if profile_image is not None:
                     photo_request = requests.get(profile_image)
-                    print(photo_request.content)
                     user.avatar.save(
                         f"{nickname}_avatar", ContentFile(photo_request.content)
                     )

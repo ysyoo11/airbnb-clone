@@ -40,7 +40,6 @@ class Calendar(calendar.Calendar):
         for week in weeks:
             for day, _ in week:
                 now = timezone.localtime()
-                print(now)
                 today = now.day
                 month = now.month
                 past = False
