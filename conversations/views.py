@@ -1,9 +1,10 @@
 from django.db.models import Q
-from django.shortcuts import redirect, reverse
-from django.views.generic import DetailView
+from django.http import Http404
+from django.shortcuts import redirect, reverse, render, resolve_url
+from django.views.generic import View
 from users import models as user_models
 from reservations import models as reservation_models
-from . import models
+from . import models, forms
 
 
 def go_conversations(request, reservation_pk, a_pk, b_pk):
@@ -21,8 +22,44 @@ def go_conversations(request, reservation_pk, a_pk, b_pk):
     return redirect(reverse("conversations:detail", kwargs={"pk": conversation.pk}))
 
 
-class ConversationDetailView(DetailView):
+class ConversationDetailView(View):
 
     """ ConversationDetailView Definition """
 
-    model = models.Conversation
+    def get(self, *args, **kwargs):
+        pk = kwargs.get("pk")
+        conversation = models.Conversation.objects.get_or_none(pk=pk)
+        if not conversation:
+            raise Http404()
+        form = forms.AddCommentForm()
+        return render(
+            self.request,
+            "conversations/conversation_detail.html",
+            {
+                "conversation": conversation,
+                "reservation": conversation.reservation,
+                "form": form,
+            },
+        )
+
+    def post(self, *args, **kwargs):
+        message = self.request.POST.get("message", None)
+        pk = kwargs.get("pk")
+        conversation = models.Conversation.objects.get_or_none(pk=pk)
+        if not conversation:
+            raise Http404
+        if message is not None:
+            models.Message.objects.create(
+                message=message, user=self.request.user, conversation=conversation
+            )
+        messages = list(conversation.messages.all())
+        if len(messages) == 0:
+            return redirect(reverse("conversations:detail", pk=pk))
+        else:
+            last_message = messages[-1]
+            message_pk = last_message.pk
+            return redirect(
+                "{}#message_{}".format(
+                    resolve_url("conversations:detail", pk=pk), message_pk
+                )
+            )

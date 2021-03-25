@@ -7,42 +7,54 @@ Conversation
 
 {% block content %}
 
-<div class="container max-w-full flex h-75vh">
+<div class="container w-4/5 mx-auto flex h-75vh mb-20">
 
-    <div class="flex flex-col w-1/4 border-r border-gray-200">
+    <div class="flex flex-col w-1/4 border-r border-gray-200 max-h-screen">
         <div class="flex font-bold p-8 border-b border-gray-200">
             <span class="place-self-center">Reservation Details</span>
         </div>
-        <a href="{% url 'rooms:detail' conversation.reservation.room.pk %}" class="mt-8 px-8 flex flex-col border-b border-gray-200">
-            <span
-                class="font-medium mb-2 {% if conversation.reservation.status == 'pending' %} text-yellow-500 {% elif conversation.reservation.status == 'confirmed' %} text-green-400 {% else %} text-red-400 {% endif %}">{{conversation.reservation.get_status_display}}</span>
-            <span class="text-2xl mb-1">{{conversation.reservation.room.name}}</span>
-            <span class="mb-1">{{conversation.reservation.room.city}}, {{conversation.reservation.room.country.name}}</span>
-            <span class="room_capacity font-light mb-2">
-                {{conversation.reservation.room.guests}} guest{{conversation.reservation.room.guests|pluralize}} ･ {{conversation.reservation.room.bedrooms}} bedroom{{conversation.reservation.room.bedrooms|pluralize}} ･
-                {{conversation.reservation.room.beds}} bed{{conversation.reservation.room.beds|pluralize}} ･ {{conversation.reservation.room.baths}} bath{{conversation.reservation.room.baths|pluralize}}</span>
-            <span class="mb-2 text-xl font-medium">${{conversation.reservation.room.price}} / night</span>
-            <div class="mb-8 h-64 bg-cover bg-center rounded-lg"
-                style="background-image: url({{conversation.reservation.room.first_photo}});">
+        <div class="flex flex-col py-8 px-8 border-b border-gray-200">
+            <a href="{% url 'rooms:detail' reservation.room.pk %}" class="flex flex-col">
+                <span
+                    class="font-medium mb-2 {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-400 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</span>
+                <span class="text-2xl mb-1">{{reservation.room.name}}</span>
+                <span class="mb-1">{{reservation.room.city}}, {{reservation.room.country.name}}</span>
+                <span class="room_capacity font-light mb-2">
+                    {{reservation.room.guests}} guest{{reservation.room.guests|pluralize}} ･ {{reservation.room.bedrooms}} bedroom{{reservation.room.bedrooms|pluralize}} ･
+                    {{reservation.room.beds}} bed{{reservation.room.beds|pluralize}} ･ {{reservation.room.baths}} bath{{reservation.room.baths|pluralize}}</span>
+                <span class="mb-4 text-xl font-medium">${{reservation.room.price}} / night</span>
+                <div class="mb-4 h-64 bg-cover bg-center rounded-lg"
+                    style="background-image: url({{reservation.room.first_photo}});">
+                </div>
+            </a>
+            <div class="flex flex-col">
+                <div class="flex flex-col mb-2">
+                    <span class="text-xl mb-1">Check-in:</span>
+                    <span class="ml-4">{{reservation.get_check_in_month}} {{reservation.check_in.day}}, {{reservation.check_in.year}}</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl mb-1">Check-out:</span>
+                    <span class="ml-4">{{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}</span>
+                </div>
             </div>
-        </a>
+        </div>
         <div class="py-8 px-8 flex flex-col">
             <div class="flex mb-6">
-                <a href="{{conversation.reservation.room.host.get_absolute_url}}" class="relative">
-                    {% include 'partials/user_avatar.html' with user=conversation.reservation.room.host size=16 %}
+                <a href="{{reservation.room.host.get_absolute_url}}" class="relative">
+                    {% include 'partials/user_avatar.html' with user=reservation.room.host size=16 %}
                     <i class="fas fa-medal text-red-400 text-sm absolute bottom-0 right-0"></i>
                 </a>
                 <div class="ml-4 flex flex-col justify-evenly">
-                    <span class="font-medium text-xl">{{conversation.reservation.room.host.first_name}} {{conversation.reservation.room.host.last_name}}</span>
-                    <span class="font-light text-gray-500">Joined in {{conversation.reservation.room.host.date_joined|date:"F Y"}}</span>
+                    <span class="font-medium text-xl">{{reservation.room.host.first_name}} {{reservation.room.host.last_name}}</span>
+                    <span class="font-light text-gray-500">Joined in {{reservation.room.host.date_joined|date:"F Y"}}</span>
                 </div>
             </div>
             <div class="text-xl flex flex-col">
                 <div class="mb-2">
                     <i class="fas fa-star text-red-400 mr-2"></i>
-                    <span class="font-semibold">{{conversation.reservation.room.total_rating}} {{conversation.reservation.room.num_reviews}}</span>
+                    <span class="font-semibold">{{reservation.room.total_rating}} {{reservation.room.num_reviews}}</span>
                 </div>
-                {% if conversation.reservation.room.host.superhost %}
+                {% if reservation.room.host.superhost %}
                     <div class="mb-2">
                         <i class="fas fa-medal text-red-400 mr-2"></i>
                         <span class="text-gray-500">Superhost</span>
@@ -55,31 +67,39 @@ Conversation
         </div>
     </div>
 
-    <div class="flex flex-col w-3/4">
+    <div class="flex flex-col w-3/4 h-full">
         <div class="flex font-bold px-4 py-8 border-b border-gray-200">
             <span class="place-self-center">Chat</span>
         </div>
-        <div class="flex flex-col p-8">
-            {% for message in conversation.messages.all %}
-                <div class="flex mb-10 {% if message.user.pk == user.pk %} self-end text-right flex-row-reverse {% endif %}">
-                    {% if message.user == conversation.reservation.room.host %}
-                        {% include 'partials/user_avatar.html' with user=conversation.reservation.room.host size=16 %}
-                    {% endif %}
-                    <div class="flex flex-col {% if message.user.pk != user.pk %} mx-3 {% elif message.user.pk == user.pk %} ml-3 {% endif %}">
-                        <span class="font-medium">{{message.user.first_name}}</span>
-                        <div class="mt-1 px-5 py-2 rounded-2xl max-w-2xl
-                        {% if message.user.pk == user.pk %}
-                            rounded-tr-none bg-blue-400 text-white
-                        {% else %}
-                            rounded-tl-none bg-gray-200
+        <div class="flex flex-col justify-between h-full">
+            <div class="flex flex-col p-8 max-h-75vh overflow-scroll">
+                {% for message in conversation.messages.all %}
+                    <div class="flex mb-6 {% if message.user.pk == user.pk %} self-end text-right flex-row-reverse {% endif %}">
+                        {% if message.user == reservation.room.host %}
+                            {% include 'partials/user_avatar.html' with user=reservation.room.host size=16 %}
                         {% endif %}
-                        ">{{message.message}}</div>
+                        <div class="flex flex-col {% if message.user.pk != user.pk %} mx-3 {% elif message.user.pk == user.pk %} ml-3 {% endif %}">
+                            <span class="font-medium">{{message.user.first_name}}</span>
+                            <div class="mt-1 px-5 py-2 rounded-2xl max-w-2xl
+                            {% if message.user.pk == user.pk %}
+                                rounded-tr-none bg-blue-400 text-white
+                            {% else %}
+                                rounded-tl-none bg-gray-200
+                            {% endif %}
+                            ">{{message.message}}</div>
+                        </div>
+                        <div class="flex items-end">
+                            <span class="text-gray-400 text-sm font-light">{{message.created|time:"H:i"}}</span>
+                        </div>
+                        <a name="message_{{message.pk}}"></a>
                     </div>
-                    <div class="flex items-end">
-                        <span class="text-gray-400 text-sm font-light">{{message.created|time:"H:i"}}</span>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            <form method="POST" class="flex message_form px-8 my-8 h-24 w-full">
+                {% csrf_token %}
+                {{form.message}}
+                <button class="w-1/5 bg-green-400 text-white ml-4 rounded font-medium hover:bg-green-300">Send</button>
+            </form>
         </div>
     </div>
 </div>

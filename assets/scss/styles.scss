@@ -213,4 +213,17 @@ textarea {
     }
   }
 }
+
+.message_form {
+  input {
+    height: 100%;
+    width: 90%;
+    padding: 0 12px;
+    outline: none;
+    @apply border border-gray-300 rounded;
+    &:focus {
+      @apply border-gray-600;
+    }
+  }
+}
 @tailwind utilities;
