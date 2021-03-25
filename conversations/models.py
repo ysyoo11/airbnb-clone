@@ -9,6 +9,12 @@ class Conversation(core_models.TimeStampedModel):
     participants = models.ManyToManyField(
         "users.User", related_name="conversations", blank=True
     )
+    reservation = models.ForeignKey(
+        "reservations.Reservation",
+        related_name="conversations",
+        on_delete=models.CASCADE,
+        null=True,
+    )
 
     def __str__(self):
         usernames = []

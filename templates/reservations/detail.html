@@ -41,7 +41,7 @@
                 <span class="font-medium text-2xl text-gray-600">{% trans "Contact Your Airbnb Host" %}</span>
                 <span class="text-2xl text-gray-500">{% trans "Your host is the best person to contact for questions about your reservation." %}</span>
                 {% if reservation.room.host != user %}
-                    <a href="{% url 'conversations:go' reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
+                    <a href="{% url 'conversations:go' reservation.pk reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
                 {% endif %}
             </div>
         </div>

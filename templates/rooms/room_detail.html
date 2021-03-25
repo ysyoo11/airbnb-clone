@@ -59,7 +59,9 @@
                     </div>
                     <a href="{{room.host.get_absolute_url}}" class="relative">
                         {% include 'partials/user_avatar.html' with user=room.host size=16 %}
-                        <i class="fas fa-check-circle text-green-400 text-sm absolute bottom-0 right-0"></i>
+                        {% if room.host.superhost %}
+                            <i class="fas fa-medal text-red-400 text-sm absolute bottom-0 right-0"></i>
+                        {% endif %}
                     </a>
                 </div>
                 <hr class="border-top border-gray-200 my-7">
