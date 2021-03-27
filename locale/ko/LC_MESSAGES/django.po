@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 01:34+0900\n"
+"POT-Creation-Date: 2021-03-27 14:44+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,6 +64,44 @@ msgstr "페이지를 찾을 수 없습니다 😢"
 msgid "Search by City"
 msgstr "도시명으로 검색"
 
+#: templates/conversations/conversation_detail.html:14
+#, fuzzy
+#| msgid "Reservation Updated."
+msgid "Reservation Details"
+msgstr "예약 정보"
+
+#: templates/conversations/conversation_detail.html:26
+#, fuzzy
+#| msgid "/ night"
+msgid "night"
+msgstr "/ 1박"
+
+#: templates/conversations/conversation_detail.html:33
+msgid "Check-in"
+msgstr "체크인"
+
+#: templates/conversations/conversation_detail.html:37
+msgid "Check-out"
+msgstr "체크아웃"
+
+#: templates/conversations/conversation_detail.html:50
+msgid "Joined in"
+msgstr "가입 날짜:"
+
+#: templates/conversations/conversation_detail.html:61
+#, fuzzy
+#| msgid "superhost"
+msgid "Superhost"
+msgstr "슈퍼호스트"
+
+#: templates/conversations/conversation_detail.html:73
+msgid "Chat"
+msgstr "메세지"
+
+#: templates/conversations/conversation_detail.html:102
+msgid "Send"
+msgstr "보내기"
+
 #: templates/emails/verify_email.html:3
 msgid "Please verify your email"
 msgstr "이메일을 인증해주세요"
@@ -72,6 +110,10 @@ msgstr "이메일을 인증해주세요"
 #, python-format
 msgid "Hello, %(first_name)s!"
 msgstr "안녕하세요, %(first_name)s님!"
+
+#: templates/lists/list_detail.html:14 templates/users/profile.html:28
+msgid "My Favourites"
+msgstr "저장된 숙소들"
 
 #: templates/partials/footer.html:4
 msgid "All rights reserved"
@@ -181,19 +223,19 @@ msgstr "저장하기"
 msgid "%(room_type)s hosted by %(host_name)s"
 msgstr "%(host_name)s의 %(room_type)s 타입 숙소"
 
-#: templates/rooms/room_detail.html:71
+#: templates/rooms/room_detail.html:73
 msgid "Amenities"
 msgstr "어메니티"
 
-#: templates/rooms/room_detail.html:80
+#: templates/rooms/room_detail.html:82
 msgid "House Rules"
 msgstr "하우스 룰"
 
-#: templates/rooms/room_detail.html:90
+#: templates/rooms/room_detail.html:92
 msgid "Reviews"
 msgstr "리뷰"
 
-#: templates/rooms/room_detail.html:121
+#: templates/rooms/room_detail.html:123
 msgid "Edit Room"
 msgstr "방 편집하기"
 
@@ -263,10 +305,6 @@ msgstr "비밀번호 업데이트"
 msgid "Change password"
 msgstr "비밀번호 변경"
 
-#: templates/users/profile.html:28
-msgid "My Favourites"
-msgstr "저장된 숙소들"
-
 #: templates/users/profile.html:31
 msgid "Edit Profile"
 msgstr "프로필 편집"
@@ -290,66 +328,66 @@ msgstr "비밀번호 변경"
 msgid "Access is denied 😐"
 msgstr "접속 불가능 😐"
 
-#: users/models.py:21
+#: users/models.py:22
 msgid "Male"
 msgstr "남자"
 
-#: users/models.py:22
+#: users/models.py:23
 msgid "Female"
 msgstr "여자"
 
-#: users/models.py:23
+#: users/models.py:24
 msgid "Other"
 msgstr "기타"
 
-#: users/models.py:31
+#: users/models.py:32
 msgid "English"
 msgstr "영어"
 
-#: users/models.py:32
+#: users/models.py:33
 msgid "Korean"
 msgstr "한국어"
 
-#: users/models.py:33
+#: users/models.py:34
 msgid "Japanese"
 msgstr "일본어"
 
-#: users/models.py:60
+#: users/models.py:61
 msgid "gender"
 msgstr "성별"
 
-#: users/models.py:62
+#: users/models.py:63
 msgid "bio"
 msgstr "자기소개"
 
-#: users/models.py:63
+#: users/models.py:64
 msgid "date_of_birth"
 msgstr "생년월일"
 
-#: users/models.py:65
+#: users/models.py:66
 msgid "language"
 msgstr "언어"
 
-#: users/models.py:72
+#: users/models.py:73
 msgid "currency"
 msgstr "화폐"
 
-#: users/models.py:78
+#: users/models.py:79
 msgid "superhost"
 msgstr "슈퍼호스트"
 
-#: users/models.py:79
+#: users/models.py:80
 msgid "email_verified"
 msgstr "이메일_인증"
 
-#: users/models.py:81
+#: users/models.py:82
 msgid "email_code"
 msgstr "이메일_코드"
 
-#: users/models.py:84
+#: users/models.py:85
 msgid "login_method"
 msgstr "로그인_방법"
 
-#: users/models.py:99
+#: users/models.py:101
 msgid "Verify Airbnb account"
 msgstr "Airbnb 계정을 인증하세요"
