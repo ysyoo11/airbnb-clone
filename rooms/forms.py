@@ -8,7 +8,7 @@ class SearchForm(forms.Form):
     """ SearchForm Definition"""
 
     city = forms.CharField(initial="Anywhere")
-    country = CountryField(default="AU").formfield()
+    country = CountryField(blank_label="(Select country)", blank=True).formfield()
     room_type = forms.ModelChoiceField(
         empty_label="Any kind", queryset=models.RoomType.objects.all(), required=False
     )

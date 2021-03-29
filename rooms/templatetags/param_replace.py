@@ -18,7 +18,7 @@ def param_replace(context, **kwargs):
 
     <a href="/things/?with_frosting=true&page=3">Page 3</a>
     """
-    d = context["request"].GET.copy()
-    for k, v in kwargs.items():
-        d[k] = v
-    return d.urlencode()
+    qs = context["request"].GET.copy()
+    for key, value in kwargs.items():
+        qs[key] = value
+    return qs.urlencode()

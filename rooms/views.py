@@ -40,9 +40,11 @@ class SearchView(View):
 
     def get(self, request):
 
+        city = request.GET.get("city")
+        city = city.title()
         country = request.GET.get("country")
 
-        if country:
+        if city or country:
             form = forms.SearchForm(request.GET)
             if form.is_valid():
                 city = form.cleaned_data.get("city")
@@ -62,7 +64,8 @@ class SearchView(View):
                 if city != "Anywhere":
                     filter_args["city__startswith"] = city
 
-                filter_args["country"] = country
+                if country != "":
+                    filter_args["country"] = country
 
                 if room_type is not None:
                     filter_args["room_type"] = room_type
@@ -91,9 +94,11 @@ class SearchView(View):
                 for amenity in amenities:
                     filter_args["amenities"] = amenity
 
-                qs = models.Room.objects.filter(**filter_args).order_by("-created")
+                result_qs = models.Room.objects.filter(**filter_args).order_by(
+                    "-created"
+                )
 
-                paginator = Paginator(qs, 20, orphans=5)
+                paginator = Paginator(result_qs, 20, orphans=5)
 
                 page = request.GET.get("page", 1)
 

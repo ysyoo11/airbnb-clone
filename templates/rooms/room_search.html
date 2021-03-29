@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
-{% load my_tags i18n %}
+{% load param_replace i18n %}
 
 {% block page_title %}
     Search
 {% endblock page_title %}
-
-{% block search_bar %}
-{% endblock search_bar %}
 
 {% block content %}
 
@@ -22,7 +19,7 @@
     <h3>{% trans "Results" %}</h3>
 
     {% for room in rooms %}
-        <h3>{{room.name}}</h3>
+        {% include 'partials/room_card.html' with room=room %}
     {% endfor %}
 
     <h5>
