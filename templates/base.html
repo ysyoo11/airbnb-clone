@@ -14,7 +14,7 @@
 
   <body class="text-gray-800 mt-20">
     {% include "partials/messages.html" %}
-    <header class="container z-10 max-w-full flex items-center justify-between text-center h-20 px-20 shadow-md fixed bg-white inset-0">
+    <header class="container z-50 max-w-full flex items-center justify-between text-center h-20 px-20 shadow-md fixed bg-white inset-0">
       <div class="flex">
         <a href="{% url 'core:home' %}">
           <img class="w-24" src="{% static 'img/logo.png' %}" alt="logo">
@@ -45,7 +45,30 @@
         fetch(`{% url 'users:switch_language' %}?lang=${selected}`).then(() => window.location.reload());
       }
 
+      const closeFilter = () => {
+        const searchForm = document.querySelector(".search_form");
+        searchForm.classList.remove("opened");
+        searchForm.style.zIndex=0;
+        searchForm.style.opacity=0;
+        searchForm.style.pointerEvents="none";
+        searchFilter.removeEventListener("click", closeFilter);
+        searchFilter.addEventListener("click", openFilter)
+      }
+
+      const openFilter = () => {
+        const searchForm = document.querySelector(".search_form");
+        searchForm.classList.add("opened");
+        searchForm.style.zIndex=20;
+        searchForm.style.opacity=1;
+        searchForm.style.pointerEvents="auto";
+        searchFilter.removeEventListener("click", openFilter);
+
+        const openedForm = document.querySelector(".opened");
+        searchFilter.addEventListener("click", closeFilter);
+      }
+
       langSelect.addEventListener("change", handleLangChange);
+      searchFilter.addEventListener("click", openFilter);
     </script>
   </body>
 

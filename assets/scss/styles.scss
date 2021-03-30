@@ -280,6 +280,9 @@ textarea {
   }
   select {
     @apply w-36 border-b outline-none;
+    &:hover {
+      @apply border-b border-gray-800;
+    }
   }
   #id_amenities {
     columns: 5;
@@ -287,6 +290,11 @@ textarea {
       @apply mb-1;
     }
   }
+}
+
+.opened {
+  z-index: 20;
+  opacity: 1;
 }
 
 @tailwind utilities;

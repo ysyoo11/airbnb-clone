@@ -11,13 +11,13 @@
 
         <h2 class="text-2xl font-medium">{% trans "Search Results" %}</h2>
 
-        <div class="flex justify-start text-lg mt-3">
+        <div class="flex justify-start text-lg my-3">
             <div class="flex cursor-pointer items-center" id="js-searchFilter">
                 <i class="fas fa-filter text-red-400"></i>
                 <span class="text-red-400 ml-1 font-medium">Filters</span>
             </div>
         </div>
-        <form method="get" action="{% url 'rooms:search' %}" class="w-full search_form absolute fixed z-20 bg-white border-2 border-gray-300 p-3 rounded-2xl">
+        <form method="get" action="{% url 'rooms:search' %}" class="w-4/5 search_form absolute fixed z-0 opacity-0 bg-white border-2 border-gray-300 p-3 rounded-2xl pointer-events-none">
 
             {{form.as_p}}
             <div class="w-full flex justify-center">
