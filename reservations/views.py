@@ -7,29 +7,38 @@ from django.shortcuts import render, redirect, reverse
 from rooms import models as room_models
 from reviews import forms as review_forms
 from . import models
+from users import mixins as user_mixins
 
 
 class CreateError(Exception):
     pass
 
 
-def create(request, room, year, month, day):
-    try:
-        date_obj = datetime.datetime(year, month, day)
-        room = room_models.Room.objects.get(pk=room)
-        models.BookedDay.objects.get(day=date_obj, reservation__room=room)
-        raise CreateError()
-    except (room_models.Room.DoesNotExist, CreateError):
-        messages.error(request, _("Access denied."))
-        return redirect(reverse("core:home"))
-    except models.BookedDay.DoesNotExist:
-        reservation = models.Reservation.objects.create(
-            guest=request.user,
-            room=room,
-            check_in=date_obj,
-            check_out=date_obj + datetime.timedelta(days=1),
-        )
-        return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
+class CreateReservationView(user_mixins.LoggedInOnlyView, View):
+    def get(self, *args, **kwargs):
+        room_pk = kwargs.get("room")
+        year = kwargs.get("year")
+        month = kwargs.get("month")
+        day = kwargs.get("day")
+
+        try:
+            date_obj = datetime.datetime(year, month, day)
+            room = room_models.Room.objects.get(pk=room_pk)
+            models.BookedDay.objects.get(day=date_obj, reservation__room=room)
+            raise CreateError()
+        except room_models.Room.DoesNotExist:
+            messages.error(self.request, _("Access denied."))
+            return redirect(reverse("core:home"))
+        except models.BookedDay.DoesNotExist:
+            reservation = models.Reservation.objects.create(
+                guest=self.request.user,
+                room=room,
+                check_in=date_obj,
+                check_out=date_obj + datetime.timedelta(days=1),
+            )
+            return redirect(
+                reverse("reservations:detail", kwargs={"pk": reservation.pk})
+            )
 
 
 class ReservationDetailView(View):

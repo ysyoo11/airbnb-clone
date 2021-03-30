@@ -30,9 +30,8 @@ Photos of {{room.name}}
         </div>
     {% endfor %}
     
-    <div class="btn btn-link">
-        <a href="{% url 'rooms:edit' room.pk %}">{% trans "Back to Edit Room" %}</a>
-    </div>
+    <a href="{% url 'rooms:edit' room.pk %}" class="btn btn-link">{% trans "Back to Edit Room" %}</a>
+    
 </div>
 
 {% endblock content %}

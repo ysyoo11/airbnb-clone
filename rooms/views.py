@@ -146,6 +146,10 @@ class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
     template_name = "rooms/room_edit.html"
     success_message = _("Room updated ✨")
 
+    def get_success_url(self):
+        room_pk = self.kwargs.get("pk")
+        return reverse("rooms:detail", kwargs={"pk": room_pk})
+
     def get_object(self, queryset=None):
         room = super().get_object(queryset=queryset)
         if room.host.pk != self.request.user.pk:

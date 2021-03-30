@@ -5,6 +5,7 @@ from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils import translation
+from django.utils.translation import gettext_lazy as _
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, reverse
 from django.contrib import messages
@@ -40,7 +41,7 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
 def log_out(request):
     logout(request)
-    messages.info(request, "See you later!")
+    messages.info(request, _("See you later!"))
     return redirect(reverse("core:home"))
 
 
@@ -49,7 +50,7 @@ class SignUpView(mixins.LoggedOutOnlyView, SuccessMessageMixin, FormView):
     template_name = "users/signup.html"
     form_class = forms.SignUpForm
     success_url = reverse_lazy("core:home")
-    success_message = "Welcome! 🎉"
+    success_message = _("Welcome! 🎉")
 
     def form_valid(self, form):
         form.save()

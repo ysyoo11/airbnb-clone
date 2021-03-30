@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-27 14:44+0900\n"
+"POT-Creation-Date: 2021-03-30 16:00+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: reservations/views.py:23
-#, fuzzy
-#| msgid "Access is denied 😐"
 msgid "Access denied."
 msgstr "접속 불가능 😐"
 
@@ -32,27 +30,27 @@ msgstr "예약정보 업데이트가 업데이트 되었습니다."
 msgid "Review submitted successfully."
 msgstr "리뷰가 성공적으로 등록되었습니다."
 
-#: rooms/views.py:141
+#: rooms/views.py:147
 msgid "Room updated ✨"
 msgstr "방 정보가 업데이트 되었습니다 ✨"
 
-#: rooms/views.py:187
+#: rooms/views.py:197
 msgid "Can't delete the photo."
 msgstr "사진을 지울 수 없습니다."
 
-#: rooms/views.py:190
+#: rooms/views.py:200
 msgid "Photo deleted ✔"
 msgstr "사진이 삭제되었습니다."
 
-#: rooms/views.py:202
+#: rooms/views.py:212
 msgid "Photo updated ✨"
 msgstr "사진이 업데이트 되었습니다 ✨"
 
-#: rooms/views.py:219
+#: rooms/views.py:229
 msgid "Photo uploaded ✔️"
 msgstr "사진이 업로드 되었습니다."
 
-#: rooms/views.py:233
+#: rooms/views.py:243
 msgid "Room uploaded 🙌🏼"
 msgstr "숙소가 등록되었습니다 🙌🏼"
 
@@ -65,14 +63,10 @@ msgid "Search by City"
 msgstr "도시명으로 검색"
 
 #: templates/conversations/conversation_detail.html:14
-#, fuzzy
-#| msgid "Reservation Updated."
 msgid "Reservation Details"
 msgstr "예약 정보"
 
 #: templates/conversations/conversation_detail.html:26
-#, fuzzy
-#| msgid "/ night"
 msgid "night"
 msgstr "/ 1박"
 
@@ -89,8 +83,6 @@ msgid "Joined in"
 msgstr "가입 날짜:"
 
 #: templates/conversations/conversation_detail.html:61
-#, fuzzy
-#| msgid "superhost"
 msgid "Superhost"
 msgstr "슈퍼호스트"
 
@@ -164,10 +156,8 @@ msgid "/ night"
 msgstr "/ 1박"
 
 #: templates/reservations/detail.html:16
-#, fuzzy
-#| msgid "Reservation Updated."
 msgid "Your Reservation"
-msgstr "예약정보 업데이트가 업데이트 되었습니다."
+msgstr "예약 상세"
 
 #: templates/reservations/detail.html:41
 msgid "Contact Your Airbnb Host"
@@ -240,16 +230,20 @@ msgid "Edit Room"
 msgstr "방 편집하기"
 
 #: templates/rooms/room_edit.html:16
-#, fuzzy
-#| msgid "Room updated ✨"
 msgid "Room Update"
 msgstr "숙소 정보 업데이트"
 
 #: templates/rooms/room_edit.html:21
-#, fuzzy
-#| msgid "Edit Room"
 msgid "Edit Photos"
 msgstr "사진 편집"
+
+#: templates/rooms/room_list.html:13
+msgid "Go"
+msgstr "근처로"
+
+#: templates/rooms/room_list.html:13
+msgid "Near"
+msgstr "놀러 가자"
 
 #: templates/rooms/room_photos.html:16
 msgid "Room Photos"
@@ -260,8 +254,6 @@ msgid "Upload Photo"
 msgstr "사진 업로드"
 
 #: templates/rooms/room_photos.html:27
-#, fuzzy
-#| msgid "Edit Room"
 msgid "Edit"
 msgstr "편집"
 
@@ -269,33 +261,17 @@ msgstr "편집"
 msgid "Delete"
 msgstr "삭제"
 
-#: templates/rooms/room_photos.html:34
-#, fuzzy
-#| msgid "Edit Room"
+#: templates/rooms/room_photos.html:33
 msgid "Back to Edit Room"
 msgstr "숙소 편집으로 돌아가기"
 
-#: templates/rooms/room_search.html:13
-msgid "Search!"
-msgstr "검색!"
-
-#: templates/rooms/room_search.html:18
-#, fuzzy
-#| msgid "Search by City"
-msgid "Search"
-msgstr "검색"
-
-#: templates/rooms/room_search.html:22
-msgid "Results"
+#: templates/rooms/room_search.html:12
+msgid "Search Results"
 msgstr "검색 결과"
 
-#: templates/rooms/room_search.html:30
-msgid "Previous"
-msgstr "이전"
-
-#: templates/rooms/room_search.html:34
-msgid "Next"
-msgstr "다음"
+#: templates/rooms/room_search.html:24
+msgid "Search"
+msgstr "검색"
 
 #: templates/users/change-password.html:15
 msgid "Password Update"
@@ -315,8 +291,6 @@ msgid "%(first_name)s's Rooms"
 msgstr "%(first_name)s의 숙소"
 
 #: templates/users/user_update.html:16 templates/users/user_update.html:30
-#, fuzzy
-#| msgid "Profile"
 msgid "Profile Update"
 msgstr "프로필 업데이트"
 
@@ -391,3 +365,11 @@ msgstr "로그인_방법"
 #: users/models.py:101
 msgid "Verify Airbnb account"
 msgstr "Airbnb 계정을 인증하세요"
+
+#: users/views.py:44
+msgid "See you later!"
+msgstr "좋은 하루 되세요!"
+
+#: users/views.py:53
+msgid "Welcome! 🎉"
+msgstr "환영합니다! 🎉"
