@@ -47,23 +47,21 @@
 
       const closeFilter = () => {
         const searchForm = document.querySelector(".search_form");
-        searchForm.classList.remove("opened");
         searchForm.style.zIndex=0;
         searchForm.style.opacity=0;
         searchForm.style.pointerEvents="none";
+        
         searchFilter.removeEventListener("click", closeFilter);
         searchFilter.addEventListener("click", openFilter)
       }
 
       const openFilter = () => {
         const searchForm = document.querySelector(".search_form");
-        searchForm.classList.add("opened");
         searchForm.style.zIndex=20;
         searchForm.style.opacity=1;
         searchForm.style.pointerEvents="auto";
-        searchFilter.removeEventListener("click", openFilter);
 
-        const openedForm = document.querySelector(".opened");
+        searchFilter.removeEventListener("click", openFilter);
         searchFilter.addEventListener("click", closeFilter);
       }
 
