@@ -9,8 +9,11 @@ from . import models, forms
 
 def go_conversations(request, reservation_pk, a_pk, b_pk):
     reservation = reservation_models.Reservation.objects.get_or_none(pk=reservation_pk)
-    user_one = user_models.User.objects.get_or_none(pk=a_pk)
-    user_two = user_models.User.objects.get_or_none(pk=b_pk)
+    try:
+        user_one = user_models.User.objects.get(pk=a_pk)
+        user_two = user_models.User.objects.get(pk=b_pk)
+    except user_models.User.DoesNotExist:
+        return None
     if user_one is not None and user_two is not None:
         try:
             conversation = models.Conversation.objects.get(
