@@ -110,6 +110,7 @@ class SearchView(View):
                     {
                         "form": form,
                         "rooms": rooms,
+                        "city": city,
                     },
                 )
 

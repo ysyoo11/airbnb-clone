@@ -7,29 +7,53 @@
 
 {% block content %}
 
-    <h2>{% trans "Search!" %}</h2>
+    <div class="container mx-auto mt-24 relative">
 
-    <form method="get" action="{% url 'rooms:search' %}">
+        <h2 class="text-2xl font-medium">{% trans "Search Results" %}</h2>
 
-        {{form.as_p}}
-        <button>{% trans "Search" %}</button>
+        <div class="flex justify-start text-lg mt-3">
+            <div class="flex cursor-pointer items-center" id="js-searchFilter">
+                <i class="fas fa-filter text-red-400"></i>
+                <span class="text-red-400 ml-1 font-medium">Filters</span>
+            </div>
+        </div>
+        <form method="get" action="{% url 'rooms:search' %}" class="w-full search_form absolute fixed z-20 bg-white border-2 border-gray-300 p-3 rounded-2xl">
 
-    </form>
+            {{form.as_p}}
+            <div class="w-full flex justify-center">
+                <button class="btn bg-blue-400 w-1/4 text-white font-medium text-lg mt-6 place-self-center hover:bg-blue-300">{% trans "Search" %}</button>
+            </div>
 
-    <h3>{% trans "Results" %}</h3>
+        </form>
 
-    {% for room in rooms %}
-        {% include 'partials/room_card.html' with room=room %}
-    {% endfor %}
+        <div class="flex flex-wrap w-full -mx-2 mb-10">
+            {% for room in rooms %}
+                {% include 'partials/room_card.html' with room=room %}
+            {% endfor %}
+        </div>
 
-    <h5>
-        {% if rooms.has_previous %}
-            <a href="?{% param_replace page=rooms.previous_page_number %}">{% trans "Previous" %}</a>
-        {% endif %}
-        Page {{rooms.number}} of {{rooms.paginator.num_pages}}
-        {% if rooms.has_next %}
-            <a href="?{% param_replace page=rooms.next_page_number %}">{% trans "Next" %}</a>
-        {% endif %}
-    </h5>
+        <div class="flex justify-center items-center text-xl mb-10">
+            {% if rooms.has_previous %}
+                <a class="paginator_arrow" href="?{% param_replace page=rooms.previous_page_number %}">
+                    <i class="fas fa-angle-left"></i>
+                </a>
+            {% else %}
+                <a class="text-gray-300"><i class="fas fa-angle-left"></i></a>
+            {% endif %}
 
+            <div class="mx-14 font-semibold">
+                <span>{{rooms.number}}</span>
+                <span class="mx-5 text-gray-400">/</span>
+                <span>{{rooms.paginator.num_pages}} </span>
+            </div>
+
+            {% if rooms.has_next %}
+                <a class="paginator_arrow" href="?{% param_replace page=rooms.next_page_number %}">
+                    <i class="fas fa-angle-right"></i></a>
+            {% else %}
+                <a class="text-gray-300"><i class="fas fa-angle-right"></i></a>
+            {% endif %}
+        </div>
+
+    </div>
 {% endblock content %}

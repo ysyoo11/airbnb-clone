@@ -226,4 +226,67 @@ textarea {
     }
   }
 }
+
+.search_form {
+  p {
+    @apply mb-2;
+  }
+  label {
+    @apply w-24 text-xl text-gray-500;
+  }
+  input {
+    @apply text-xl border-b px-1 text-right outline-none;
+    &:focus,
+    &:hover {
+      @apply border-b border-gray-800;
+    }
+  }
+  input[type="text"] {
+    @apply w-32;
+  }
+  input[type="number"] {
+    @apply w-16 px-0;
+  }
+  input[type="checkbox"] {
+    position: relative;
+    cursor: pointer;
+    margin-right: 3px;
+  }
+  input[type="checkbox"]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+    border: 2px solid #555555;
+    border-radius: 3px;
+    background-color: white;
+  }
+  input[type="checkbox"]:checked:after {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 6px;
+  }
+  select {
+    @apply w-36 border-b outline-none;
+  }
+  #id_amenities {
+    columns: 5;
+    li {
+      @apply mb-1;
+    }
+  }
+}
+
 @tailwind utilities;
