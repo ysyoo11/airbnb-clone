@@ -11,11 +11,11 @@
 
 {% block content %}
 
-<div class="container mx-auto my-10 flex flex-col items-center rounded-2xl p-6 mt-32">
+<div class="container mx-auto w-3/5 my-10 flex flex-col items-center rounded-2xl p-6 mt-32">
 
-    <div class="continue_title">{% trans "Your Reservation" %}</div>
+    <div class="continue_title">{% trans "Reservation Details" %}</div>
 
-    <div class="border border-gray-200 rounded-xl overflow-hidden">
+    <div class="border border-gray-200 rounded-xl overflow-hidden w-full">
 
         <div class="w-full h-80 bg-cover bg-center border-b border-gray-200" style="background-image: url({{reservation.room.first_photo}});"></div>
 
@@ -34,44 +34,72 @@
 
         <div class="px-8 py-10 flex w-full border-b border-gray-200">
             <div class="flex flex-col items-center mr-6">
-                {% include 'partials/user_avatar.html' with user=reservation.room.host size=32 %}
-                <div class="text-gray-500 mt-4 text-2xl">{{reservation.room.host.first_name}}</div>
-            </div>
-            <div class="flex flex-col justify-between w-full">
-                <span class="font-medium text-2xl text-gray-600">{% trans "Contact Your Airbnb Host" %}</span>
-                <span class="text-2xl text-gray-500">{% trans "Your host is the best person to contact for questions about your reservation." %}</span>
-                {% if reservation.room.host != user %}
-                    <a href="{% url 'conversations:go' reservation.pk reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
-                {% endif %}
-            </div>
-        </div>
-
-        <div class="px-8 py-10 flex {% if reservation.status != 'confirmed' %}justify-evenly{% endif %}">
-
-            {% if reservation.status != 'canceled' %}
                 
-                {% if reservation.status == 'confirmed' and reservation.is_finished %}
-                <div class="w-full flex flex-col items-center">
-                    <div class="text-3xl text-gray-600 mb-10 font-semibold py-5 px-12 border-b-2 border-gray-200">{% trans "Write a Review" %}</div>
-                    <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="review_form w-1/2 h-50vh">
-                        {% csrf_token %}
-                        {{form}}
-                        <button class="btn bg-blue-400 text-white font-medium mt-6 hover:bg-blue-300">{% trans "Submit" %}</button>
-                    </form>
-                </div>
-                {% else %}
-                    
-                    {% if reservation.status == 'pending' %}
-                        {% if reservation.room.host == user %}
-                            <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">{% trans "Confirm Reservation" %}</a>
-                        {% endif %}
-                            <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">{% trans "Cancel Reservation" %}</a>
-                    {% endif %}
-
+                {% if reservation.guest == user %}
+                    {% include 'partials/user_avatar.html' with user=reservation.room.host size=32 %}
+                    <div class="text-gray-500 mt-4 text-2xl">{{reservation.room.host.first_name}}</div>
+                {% elif reservation.room.host == user %}
+                    {% include 'partials/user_avatar.html' with user=reservation.guest size=32 %}
+                    <div class="text-gray-500 mt-4 text-2xl">{{reservation.guest.first_name}}</div>
                 {% endif %}
                     
-            {% endif %}
+            </div>
+            <div class="flex flex-col w-full justify-between">
+                <div>
+                    <span class="block font-medium text-2xl text-gray-600 mb-1">
+                        {% if reservation.guest == user %}
+                            {% trans "Contact Your Airbnb Host" %}
+                        {% elif reservation.room.host == user %}
+                            {% trans "Contact Your Guest" %}
+                        {% endif %}
+                    </span>
+                    <span class="text-2xl text-gray-500">
+                        {% if reservation.guest == user %}
+                            {% trans "Your host is the best person to contact for questions about your reservation." %}
+                        {% elif reservation.room.host == user %}
+                            {% trans "It is good to inform your guest if there's anything your guest needs to know before the stay." %}
+                        {% endif %}
+                    </span>
+                </div>
+                    
+                {% if reservation.guest == user %}
+                    <a href="{% url 'conversations:go' reservation.pk reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
+                {% elif reservation.room.host == user %}
+                    <a href="{% url 'conversations:go' reservation.pk reservation.guest.pk reservation.room.host.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
+                {% endif %}
+            </div>
         </div>
+
+        {% if reservation.status != 'canceled' %}
+            <div class="px-8 py-10 flex {% if reservation.status != 'confirmed' %}justify-evenly{% endif %}">
+                
+                {% if reservation.status == 'confirmed' and reservation.is_finished and reservation.guest == user %}
+                    <div class="w-full flex flex-col items-center">
+                        <div class="text-3xl text-gray-600 mb-10 font-semibold py-5 px-12 border-b-2 border-gray-200">{% trans "Write a Review" %}</div>
+                        <form action="{% url 'reviews:create' reservation.room.pk %}" method="POST" class="review_form w-1/2 h-50vh">
+                            {% csrf_token %}
+                            {{form}}
+                            <button class="btn bg-blue-400 text-white font-medium mt-6 hover:bg-blue-300">{% trans "Submit" %}</button>
+                        </form>
+                    </div>
+                {% endif %}
+                    
+                {% if reservation.status == 'pending' %}
+                    {% if reservation.room.host == user %}
+                        <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn w-64 bg-blue-400 text-white text-xl font-medium hover:bg-blue-300">{% trans "Confirm Reservation" %}</a>
+                    {% endif %}
+                        <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn w-64 bg-red-400 text-white text-xl font-medium hover:bg-red-300">{% trans "Cancel Reservation" %}</a>
+                {% endif %}
+                
+                
+                {% if reservation.status == 'confirmed' and not reservation.is_finished %}
+                    <div class="flex w-full items-center justify-center">
+                        <span class="text-green-500 font-medium text-2xl text-center cursor-default">Yay! This reservation is confirmed!</span>
+                    </div>
+                {% endif %}
+                    
+            </div>
+        {% endif %}
 
     </div>
     
