@@ -272,7 +272,7 @@ class UpdatePasswordView(
     PasswordChangeView,
 ):
     template_name = "users/change-password.html"
-    success_message = "Password changed successfully."
+    success_message = _("Password changed successfully.")
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
@@ -284,7 +284,7 @@ class UpdatePasswordView(
         return form
 
     def get_success_url(self):
-        return self.request.get_absolute_url()
+        return self.request.user.get_absolute_url()
 
 
 @login_required
