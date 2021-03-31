@@ -4,7 +4,7 @@ from django.shortcuts import redirect, reverse, render, resolve_url
 from django.views.generic import View
 from users import models as user_models
 from reservations import models as reservation_models
-from . import models, forms
+from . import models, forms, mixins
 
 
 def go_conversations(request, reservation_pk, a_pk, b_pk):
@@ -25,7 +25,7 @@ def go_conversations(request, reservation_pk, a_pk, b_pk):
     return redirect(reverse("conversations:detail", kwargs={"pk": conversation.pk}))
 
 
-class ConversationDetailView(View):
+class ConversationDetailView(mixins.ParticipantsOnlyView, View):
 
     """ ConversationDetailView Definition """
 
