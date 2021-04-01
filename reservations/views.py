@@ -1,6 +1,6 @@
 import datetime
 from django.http import Http404
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.utils.translation import gettext_lazy as _
 from django.contrib import messages
 from django.shortcuts import render, redirect, reverse
@@ -73,3 +73,8 @@ def edit_reservation(request, pk, verb):
     reservation.save()
     messages.success(request, _("Reservation Updated."))
     return redirect(reverse("reservations:detail", kwargs={"pk": reservation.pk}))
+
+
+class SeeMyReservationsView(user_mixins.LoggedInOnlyView, TemplateView):
+
+    template_name = "reservations/my_reservations.html"

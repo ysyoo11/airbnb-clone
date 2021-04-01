@@ -40,7 +40,7 @@
     {% if user_obj.rooms.count > 0 %}
         <div class="container mx-auto flex flex-col items-center">
             <div class="text-2xl mb-7 ml-2 p-2 border-b-2 border-gray-400 self-start">
-                <h3>
+                <h3 class="font-medium">
                     {% blocktrans with first_name=user_obj.first_name %}{{first_name}}'s Rooms{% endblocktrans %}
                 </h3>
             </div>

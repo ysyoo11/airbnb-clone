@@ -15,7 +15,7 @@ Conversation
         </div>
         <div class="flex flex-col py-6 px-6 border-b border-gray-200">
             <a href="{% url 'rooms:detail' reservation.room.pk %}" class="flex flex-col">
-                <span class="font-medium mb-2 {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-400 {% else %} text-red-400 {% endif %}">
+                <span class="font-medium mb-2 {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">
                     {{reservation.get_status_display}}
                 </span>
                 <span class="text-xl mb-1">{{reservation.room.name}}</span>

@@ -27,7 +27,7 @@
                     {{reservation.get_check_in_month}} {{reservation.check_in.day}} - {{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}
                 {% endif %}
 
-                <span class="ml-5 font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-400 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</span>
+                <span class="ml-5 font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</span>
             </div>
             <div class="font-semibold text-3xl text-gray-600">{{reservation.room.name}}</div>
         </div>
