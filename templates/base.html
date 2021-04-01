@@ -39,6 +39,8 @@
     <script>
       const langSelect = document.getElementById("js-lang");
       const searchFilter = document.getElementById("js-searchFilter");
+      const profileBtn = document.getElementById("js-profile");
+      const profileDiv = document.getElementById("js-profileDiv")
 
       const handleLangChange = () => {
         const selected = langSelect.value;
@@ -52,7 +54,7 @@
         searchForm.style.pointerEvents="none";
         
         searchFilter.removeEventListener("click", closeFilter);
-        searchFilter.addEventListener("click", openFilter)
+        searchFilter.addEventListener("click", openFilter);
       }
 
       const openFilter = () => {
@@ -65,6 +67,22 @@
         searchFilter.addEventListener("click", closeFilter);
       }
 
+      const showProfileMenu = () => {
+        const profileMenu = document.getElementById("profileMenu");
+        profileMenu.style.zIndex=50;
+        profileMenu.style.opacity=1;
+        profileMenu.style.pointerEvents="auto";
+      }
+
+      const hideProfileMenu = () => {
+        const profileMenu = document.getElementById("profileMenu");
+        profileMenu.style.zIndex = 0;
+        profileMenu.style.opacity = 0;
+        profileMenu.style.pointerEvents = "none";
+      }
+
+      profileBtn.addEventListener("mouseover", showProfileMenu);
+      profileDiv.addEventListener("mouseleave", hideProfileMenu);
       langSelect.addEventListener("change", handleLangChange);
       searchFilter.addEventListener("click", openFilter);
     </script>

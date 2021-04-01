@@ -14,7 +14,14 @@
         {% if request.session.is_hosting %}
             <a href="{% url 'rooms:create' %}" class="nav_link"><li>{% trans "Create a Room" %}</li></a>
         {% endif %}
-        <a href="{{user.get_absolute_url}}" class="nav_link"><li>{% trans "Profile" %}</li></a>
+        <div id="js-profileDiv">
+            <a href="{{user.get_absolute_url}}" class="nav_link relative" id="js-profile"><li>{% trans "Profile" %}</li></a>
+            <ul class="absolute w-32 bg-white border-2 border-gray-500 z-0 opacity-0 pointer-events-none" id="profileMenu">
+                <a href="#"><li class="nav_profile_menu">My Lists</li></a>
+                <a href="#"><li class="nav_profile_menu">Reservations</li></a>
+                <a href="#"><li class="nav_profile_menu">Messages</li></a>
+            </ul>
+        </div>
         <a href="{% url 'users:logout' %}" class="nav_link"><li>{% trans "Log out" %}</li></a>
     {% else %}
         <a href="{% url 'users:login' %}" class="nav_link"><li>{% trans "Log in" %}</li></a>
