@@ -78,3 +78,15 @@ def edit_reservation(request, pk, verb):
 class SeeMyReservationsView(user_mixins.LoggedInOnlyView, TemplateView):
 
     template_name = "reservations/my_reservations.html"
+
+    def get(self, request, *args, **kwargs):
+        hosting_rooms = room_models.Room.objects.filter(host=self.request.user)
+        host_reservations = []
+        for room in hosting_rooms:
+            host_reservation = models.Reservation.objects.get_or_none(room=room)
+            if host_reservation is not None:
+                host_reservations.append(host_reservation)
+        context = super().get_context_data(**kwargs)
+        context["host_reservations"] = host_reservations
+
+        return self.render_to_response(context)

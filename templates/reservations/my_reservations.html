@@ -11,7 +11,13 @@
 
     <div class="container mx-auto flex flex-col items-center mt-36">
         <div class="text-2xl mb-7 ml-2 p-2 border-b-2 border-gray-400 self-start">
-            <h3 class="font-medium">{% trans "Your Reservations" %}</h3>
+            <h3 class="font-medium">
+                {% if request.session.is_hosting %}
+                    {% trans "Reservation Lists" %}
+                {% else %}
+                    {% trans "Your Reservations" %}
+                {% endif %}
+            </h3>
         </div>
         <ul class="w-full">
             <li class="reservations_grid border-b-2 border-gray-500 pb-1">
@@ -19,19 +25,41 @@
                 <div class="reservations_grid_category">Room</div>
                 <div class="reservations_grid_category">Check-in</div>
                 <div class="reservations_grid_category">Check-out</div>
-                <div class="reservations_grid_category">Host</div>
+                <div class="reservations_grid_category">
+                    {% if request.session.is_hosting %}
+                        {% trans "Guest" %}
+                    {% else %}
+                        {% trans "Host" %}
+                    {% endif %}
+                </div>
             </li>
-            {% for reservation in user.reservations.all %}
-                <a href="{% url 'reservations:detail' reservation.pk %}">
-                    <li class="reservations_grid py-2 border-b border-gray-400 hover:bg-gray-200">
-                        <div class="reservations_grid_item font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</div>
-                        <div class="reservations_grid_item">{{reservation.room}}</div>
-                        <div class="reservations_grid_item">{{reservation.check_in}}</div>
-                        <div class="reservations_grid_item">{{reservation.check_out}}</div>
-                        <div class="reservations_grid_item">{{reservation.room.host.first_name}} {{reservation.room.host.last_name}}</div>
-                    </li>
-                </a>
-            {% endfor %}
+            {% if request.session.is_hosting %}
+                {% for reservation in host_reservations %}
+                    <a href="{% url 'reservations:detail' reservation.pk %}">
+                        <li class="reservations_grid py-2 border-b border-gray-400 hover:bg-gray-200">
+                            <div class="reservations_grid_item font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</div>
+                            <div class="reservations_grid_item">{{reservation.room}}</div>
+                            <div class="reservations_grid_item">{{reservation.check_in}}</div>
+                            <div class="reservations_grid_item">{{reservation.check_out}}</div>
+                            <div class="reservations_grid_item">{{reservation.guest.first_name}} {{reservation.guest.last_name}}
+                            </div>
+                        </li>
+                    </a>
+                {% endfor %}
+            {% else %}  
+                {% for reservation in user.reservations.all %}
+                    <a href="{% url 'reservations:detail' reservation.pk %}">
+                        <li class="reservations_grid py-2 border-b border-gray-400 hover:bg-gray-200">
+                            <div class="reservations_grid_item font-medium {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">{{reservation.get_status_display}}</div>
+                            <div class="reservations_grid_item">{{reservation.room}}</div>
+                            <div class="reservations_grid_item">{{reservation.check_in}}</div>
+                            <div class="reservations_grid_item">{{reservation.check_out}}</div>
+                            <div class="reservations_grid_item">{{reservation.room.host.first_name}} {{reservation.room.host.last_name}}</div>
+                        </li>
+                    </a>
+                {% endfor %}
+            {% endif %}
+            
         </ul>
     </div>
 
