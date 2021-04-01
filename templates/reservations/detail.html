@@ -62,11 +62,8 @@
                     </span>
                 </div>
                     
-                {% if reservation.guest == user %}
-                    <a href="{% url 'conversations:go' reservation.pk reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
-                {% elif reservation.room.host == user %}
-                    <a href="{% url 'conversations:go' reservation.pk reservation.guest.pk reservation.room.host.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
-                {% endif %}
+                <a href="{% url 'conversations:go' reservation.pk reservation.room.host.pk reservation.guest.pk %}" class="flex w-64 h-12 rounded-md leading-10 p-3 justify-center items-center border-2 border-green-500 text-green-500 text-xl font-medium hover:bg-green-500 hover:text-white">{% trans "Send a Message" %}</a>
+                
             </div>
         </div>
 

@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, reverse, render, resolve_url
 from django.views.generic import View
@@ -16,9 +15,7 @@ def go_conversations(request, reservation_pk, a_pk, b_pk):
         return None
     if user_one is not None and user_two is not None:
         try:
-            conversation = models.Conversation.objects.get(
-                Q(participants=user_one) & Q(participants=user_two)
-            )
+            conversation = models.Conversation.objects.get(reservation=reservation)
         except models.Conversation.DoesNotExist:
             conversation = models.Conversation.objects.create(reservation=reservation)
             conversation.participants.add(user_one, user_two)

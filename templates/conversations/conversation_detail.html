@@ -76,7 +76,7 @@ Conversation
             <div class="flex flex-col px-8 h-50vh overflow-scroll">
                 {% for message in conversation.messages.all %}
                     <div class="flex mb-6 {% if message.user.pk == user.pk %} self-end text-right flex-row-reverse {% endif %}">
-                        {% if message.user == reservation.room.host %}
+                        {% if message.user != user %}
                             {% include 'partials/user_avatar.html' with user=reservation.room.host size=16 %}
                         {% endif %}
                         <div class="flex flex-col {% if message.user.pk != user.pk %} mx-3 {% elif message.user.pk == user.pk %} ml-3 {% endif %}">
