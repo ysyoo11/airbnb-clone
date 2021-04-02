@@ -15,7 +15,7 @@
         <div class="flex justify-between items-center text-sm mb-4">
             <div class="flex">
                 <span class="text-red-400">★</span>
-                <a href="#"><span class="font-semibold underline">{{room.total_rating}}</span></a>
+                <div class="cursor-pointer" id="js-reviews"><span class="font-semibold underline">{{room.total_rating}}</span></div>
                 <span class="text-gray-500">{{room.num_reviews}}</span>
                 {% if room.host.superhost %}
                 <span class="text-gray-500">&nbsp;･ <i class="fas fa-medal text-red-400"></i>

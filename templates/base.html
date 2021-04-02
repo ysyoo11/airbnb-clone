@@ -40,7 +40,8 @@
       const langSelect = document.getElementById("js-lang");
       const searchFilter = document.getElementById("js-searchFilter");
       const profileBtn = document.getElementById("js-profile");
-      const profileDiv = document.getElementById("js-profileDiv")
+      const profileDiv = document.getElementById("js-profileDiv");
+      const linkToReviews = document.getElementById("js-reviews");
 
       const handleLangChange = () => {
         const selected = langSelect.value;
@@ -81,6 +82,14 @@
         profileMenu.style.pointerEvents = "none";
       }
 
+      const scrollToReviews = () => {
+        const reviewsLocation = document.querySelector(".reviews").offsetTop;
+        const navHeight = document.querySelector("header").offsetHeight;
+
+        window.scrollTo({top:reviewsLocation - navHeight, behavior:'smooth'});
+      }
+
+      linkToReviews.addEventListener("click", scrollToReviews);
       profileBtn.addEventListener("mouseover", showProfileMenu);
       profileDiv.addEventListener("mouseleave", hideProfileMenu);
       langSelect.addEventListener("change", handleLangChange);

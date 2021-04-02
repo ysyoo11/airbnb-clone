@@ -3,13 +3,13 @@
 @tailwind components;
 
 .nav_link {
-  @apply flex items-center border-b-2 border-white hover:border-gray-600 px-2 h-full ml-8;
+  @apply flex items-center border-b-2 border-white hover:border-gray-600 px-4 h-full;
 }
 
 .nav_profile_menu {
   @apply px-1 py-2 hover:bg-gray-200 cursor-pointer;
   &:not(last-child) {
-    @apply border-b border-gray-400;
+    @apply border-b border-gray-300;
   }
 }
 
