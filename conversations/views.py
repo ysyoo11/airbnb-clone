@@ -4,6 +4,8 @@ from django.views.generic import View
 from users import models as user_models
 from reservations import models as reservation_models
 from . import models, forms, mixins
+from users import mixins as user_mixins
+from rooms import models as room_models
 
 
 def go_conversations(request, reservation_pk, a_pk, b_pk):
@@ -63,3 +65,30 @@ class ConversationDetailView(mixins.ParticipantsOnlyView, View):
                     resolve_url("conversations:detail", pk=pk), message_pk
                 )
             )
+
+
+class ConversationsListView(user_mixins.LoggedInOnlyView, View):
+
+    """ ConversationsListView Definition """
+
+    def get(self, *args, **kwargs):
+        user = self.request.user
+        conversations = models.Conversation.objects.filter(participants=user)
+        for conversation in conversations:
+            messages = list(conversation.messages.all())
+            if len(messages) == 0:
+                conversation.last_spoken_user = ""
+                conversation.last_message = ""
+            else:
+                conversation.last_spoken_user = messages[-1].user.first_name
+                conversation.last_message = messages[-1].message
+        return render(
+            self.request,
+            "conversations/my_conversations.html",
+            {
+                "user": user,
+                "conversations": conversations,
+                "last_spoken_user": conversation.last_spoken_user,
+                "last_message": conversation.last_message,
+            },
+        )

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block page_title %}
+    Messages
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="container mx-auto flex h-75vh mb-10">
+
+    <div class="flex flex-col w-1/4 border-r border-gray-200 h-75vh">
+        <div class="flex font-bold p-6 border-b border-gray-200">
+            <span class="place-self-center">{% trans "Messages" %}</span>
+        </div>
+        <div class="flex flex-col overflow-scroll w-full h-full">
+            <ul class="h-full overflow-scroll">
+                {% for conversation in conversations %}
+                    <a href="{% url 'conversations:detail' conversation.pk %}">
+                        <li class="h-24 flex items-center py-4 px-2 border-b border-gray-200 hover:bg-gray-200">
+                            {% if conversation.reservation.room.host == user %}   
+                                {% include 'partials/user_avatar.html' with user=conversation.reservation.guest size=14 %}
+                            {% else %}
+                                {% include 'partials/user_avatar.html' with user=conversation.reservation.room.host size=14 %}
+                            {% endif %}
+                            <div class="w-56 flex flex-col ml-4 justify-evenly">
+                                <span class="font-medium text-gray-600 text-lg">
+                                    {% if conversation.reservation.room.host == user %}
+                                        {{conversation.reservation.guest.first_name}} {{conversation.reservation.guest.last_name}}
+                                    {% else %}
+                                        {{conversation.reservation.room.host.first_name}} {{conversation.reservation.room.host.last_name}}
+                                    {% endif %}   
+                                </span>
+                                {% if conversation.last_message %}
+                                    <span class="text-gray-500 truncate">{{conversation.last_message}}</span>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-3/4 h-75vh">
+        <div class="flex font-bold p-6 border-b border-gray-200">
+            <span class="place-self-center">{% trans "Chat" %}</span>
+        </div>
+        <div class="flex flex-col pt-4 justify-between h-full relative">
+            
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
