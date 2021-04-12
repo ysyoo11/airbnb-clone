@@ -7,21 +7,95 @@ Conversation
 
 {% block content %}
 
-<div class="container mx-auto flex h-75vh mb-10">
+<div class="container mx-auto flex h-full">
 
-    <div class="flex flex-col w-1/4 border-r border-gray-200 h-75vh">
+    <div class="flex flex-col w-1/4 border-r border-gray-200 h-full">
+        <div class="flex font-bold p-6 border-b border-gray-200">
+            <span class="place-self-center">{% trans "Messages" %}</span>
+        </div>
+        <div class="flex flex-col overflow-scroll w-full">
+            <ul class="h-full overflow-scroll">
+                {% for c in conversations %}
+                <a href="{% url 'conversations:detail' c.pk %}">
+                    <li class="h-24 flex items-center py-4 px-2 border-b border-gray-200 hover:bg-gray-200">
+                        {% if c.reservation.room.host == user %}
+                            {% include 'partials/user_avatar.html' with user=c.reservation.guest size=14 %}
+                        {% else %}
+                            {% include 'partials/user_avatar.html' with user=c.reservation.room.host size=14 %}
+                        {% endif %}
+                        <div class="w-56 flex flex-col ml-4 justify-evenly">
+                            <span class="font-medium text-gray-600 text-lg">
+                                {% if c.reservation.room.host == user %}
+                                    {{c.reservation.guest.first_name}} {{c.reservation.guest.last_name}}
+                                {% else %}
+                                    {{c.reservation.room.host.first_name}}
+                                    {{c.reservation.room.host.last_name}}
+                                {% endif %}
+                            </span>
+                            {% if c.last_message %}
+                                <span class="text-gray-500 truncate">{{c.last_message}}</span>
+                            {% endif %}
+                        </div>
+                    </li>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-1/2 h-full">
+        <div class="flex font-bold p-6 border-b border-gray-200">
+            <span class="place-self-center">{% trans "Chat" %}</span>
+        </div>
+        <div class="flex flex-col px-4 pt-4 overflow-scroll h-5/6">
+            {% for message in conversation.messages.all %}
+                <div class="flex mb-6 {% if message.user.pk == user.pk %} self-end flex-row-reverse {% endif %}">
+                    {% if message.user != user %}
+                        {% include 'partials/user_avatar.html' with user=message.user size=16 %}
+                    {% endif %}
+                    <div class="flex flex-col {% if message.user.pk != user.pk %} mx-3 {% elif message.user.pk == user.pk %} ml-3 {% endif %}">
+                        <span class="font-medium {% if message.user.pk == user.pk %}text-right{% endif %}">{{message.user.first_name}}</span>
+                        <div class="mt-1 px-5 py-2 rounded-2xl max-w-lg
+                        {% if message.user.pk == user.pk %}
+                            rounded-tr-none bg-blue-400 text-white
+                        {% else %}
+                            rounded-tl-none bg-gray-200
+                        {% endif %}
+                        ">{{message.message}}</div>
+                    </div>
+                    <div class="flex items-end">
+                        <span class="text-gray-400 text-sm font-light">{{message.created|time:"H:i"}}</span>
+                    </div>
+                    <a name="message_{{message.pk}}"></a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="flex items-center h-1/6 py-4">
+            <form method="POST" id="js-chatForm" class="flex message_form px-4 w-full mb-0 h-full">
+                {% csrf_token %}
+                {{form.message}}
+                <button class="w-1/5 bg-green-400 text-white ml-4 rounded font-medium hover:bg-green-300">{% trans "Send" %}</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-1/4 border-l border-gray-200 h-full">
         <div class="flex font-bold p-6 border-b border-gray-200">
             <span class="place-self-center">{% trans "Reservation Details" %}</span>
         </div>
         <div class="flex flex-col py-6 px-6 border-b border-gray-200">
             <a href="{% url 'rooms:detail' reservation.room.pk %}" class="flex flex-col">
-                <span class="font-medium mb-2 {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">
+                <span
+                    class="font-medium mb-2 {% if reservation.status == 'pending' %} text-yellow-500 {% elif reservation.status == 'confirmed' %} text-green-500 {% else %} text-red-400 {% endif %}">
                     {{reservation.get_status_display}}
                 </span>
                 <span class="text-xl mb-1">{{reservation.room.name}}</span>
                 <span class="mb-1 text-sm">{{reservation.room.city}}, {{reservation.room.country.name}}</span>
                 <span class="room_capacity font-light mb-2 text-sm">
-                    {{reservation.room.guests}} guest{{reservation.room.guests|pluralize}} ･ {{reservation.room.bedrooms}} bedroom{{reservation.room.bedrooms|pluralize}} ･ {{reservation.room.beds}} bed{{reservation.room.beds|pluralize}} ･ {{reservation.room.baths}} bath{{reservation.room.baths|pluralize}}
+                    {{reservation.room.guests}} guest{{reservation.room.guests|pluralize}} ･ {{reservation.room.bedrooms}}
+                    bedroom{{reservation.room.bedrooms|pluralize}} ･ {{reservation.room.beds}}
+                    bed{{reservation.room.beds|pluralize}} ･ {{reservation.room.baths}}
+                    bath{{reservation.room.baths|pluralize}}
                 </span>
                 <span class="mb-2 font-medium">${{reservation.room.price}} / {% trans "night" %}</span>
                 <div class="mb-4 h-24 bg-cover bg-center rounded-lg"
@@ -31,11 +105,13 @@ Conversation
             <div class="flex flex-col">
                 <div class="flex flex-col mb-2">
                     <span class="mb-1">{% trans "Check-in" %}:</span>
-                    <span class="ml-4">{{reservation.get_check_in_month}} {{reservation.check_in.day}}, {{reservation.check_in.year}}</span>
+                    <span class="ml-4">{{reservation.get_check_in_month}} {{reservation.check_in.day}},
+                        {{reservation.check_in.year}}</span>
                 </div>
                 <div class="flex flex-col">
                     <span class="mb-1">{% trans "Check-out" %}:</span>
-                    <span class="ml-4">{{reservation.get_check_out_month}} {{reservation.check_out.day}}, {{reservation.check_out.year}}</span>
+                    <span class="ml-4">{{reservation.get_check_out_month}} {{reservation.check_out.day}},
+                        {{reservation.check_out.year}}</span>
                 </div>
             </div>
         </div>
@@ -46,8 +122,10 @@ Conversation
                     <i class="fas fa-medal text-red-400 text-sm absolute bottom-0 right-0"></i>
                 </a>
                 <div class="ml-4 flex flex-col justify-evenly">
-                    <span class="font-medium text-lg">{{reservation.room.host.first_name}} {{reservation.room.host.last_name}}</span>
-                    <span class="font-light text-gray-500">{% trans "Joined in" %} {{reservation.room.host.date_joined|date:"F Y"}}</span>
+                    <span class="font-medium text-lg">{{reservation.room.host.first_name}}
+                        {{reservation.room.host.last_name}}</span>
+                    <span class="font-light text-gray-500">{% trans "Joined in" %}
+                        {{reservation.room.host.date_joined|date:"F Y"}}</span>
                 </div>
             </div>
             <div class="flex flex-col">
@@ -56,53 +134,18 @@ Conversation
                     <span class="font-semibold">{{reservation.room.total_rating}} {{reservation.room.num_reviews}}</span>
                 </div>
                 {% if reservation.room.host.superhost %}
-                    <div class="mb-2">
-                        <i class="fas fa-medal text-red-400 mr-2"></i>
-                        <span class="text-gray-500">{% trans "Superhost" %}</span>
-                    </div>
+                <div class="mb-2">
+                    <i class="fas fa-medal text-red-400 mr-2"></i>
+                    <span class="text-gray-500">{% trans "Superhost" %}</span>
+                </div>
                 {% endif %}
                 <div>
-
+    
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="flex flex-col w-3/4 h-75vh">
-        <div class="flex font-bold p-6 border-b border-gray-200">
-            <span class="place-self-center">{% trans "Chat" %}</span>
-        </div>
-        <div class="flex flex-col pt-4 justify-between h-full relative">
-            <div class="flex flex-col px-8 h-50vh overflow-scroll">
-                {% for message in conversation.messages.all %}
-                    <div class="flex mb-6 {% if message.user.pk == user.pk %} self-end text-right flex-row-reverse {% endif %}">
-                        {% if message.user != user %}
-                            {% include 'partials/user_avatar.html' with user=reservation.room.host size=16 %}
-                        {% endif %}
-                        <div class="flex flex-col {% if message.user.pk != user.pk %} mx-3 {% elif message.user.pk == user.pk %} ml-3 {% endif %}">
-                            <span class="font-medium">{{message.user.first_name}}</span>
-                            <div class="mt-1 px-5 py-2 rounded-2xl max-w-2xl
-                            {% if message.user.pk == user.pk %}
-                                rounded-tr-none bg-blue-400 text-white
-                            {% else %}
-                                rounded-tl-none bg-gray-200
-                            {% endif %}
-                            ">{{message.message}}</div>
-                        </div>
-                        <div class="flex items-end">
-                            <span class="text-gray-400 text-sm font-light">{{message.created|time:"H:i"}}</span>
-                        </div>
-                        <a name="message_{{message.pk}}"></a>
-                    </div>
-                {% endfor %}
-            </div>
-            <form method="POST" class="flex message_form px-8 mt-8 h-24 w-full bottom-0 absolute fixed mb-0">
-                {% csrf_token %}
-                {{form.message}}
-                <button class="w-1/5 bg-green-400 text-white ml-4 rounded font-medium hover:bg-green-300">{% trans "Send" %}</button>
-            </form>
-        </div>
-    </div>
 </div>
 
 {% endblock content %}

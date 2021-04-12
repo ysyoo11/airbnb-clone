@@ -42,6 +42,11 @@
       const profileBtn = document.getElementById("js-profile");
       const profileDiv = document.getElementById("js-profileDiv");
       const linkToReviews = document.getElementById("js-reviews");
+      const chatInput = document.getElementById("id_message");
+
+      window.onload = () => {
+        chatInput.focus();
+      }
 
       const handleLangChange = () => {
         const selected = langSelect.value;

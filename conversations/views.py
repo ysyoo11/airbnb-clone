@@ -34,6 +34,14 @@ class ConversationDetailView(mixins.ParticipantsOnlyView, View):
         if not conversation:
             raise Http404()
         form = forms.AddCommentForm()
+        user = self.request.user
+        conversations = models.Conversation.objects.filter(participants=user)
+        for c in conversations:
+            messages = list(c.messages.all())
+            if len(messages) == 0:
+                c.last_message = ""
+            else:
+                c.last_message = messages[-1].message
         return render(
             self.request,
             "conversations/conversation_detail.html",
@@ -41,6 +49,9 @@ class ConversationDetailView(mixins.ParticipantsOnlyView, View):
                 "conversation": conversation,
                 "reservation": conversation.reservation,
                 "form": form,
+                "user": user,
+                "conversations": conversations,
+                "last_message": c.last_message,
             },
         )
 
