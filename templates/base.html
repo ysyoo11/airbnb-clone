@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="favicon" type="image/png" href="/static/img/favicon.png">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="https://kit.fontawesome.com/4d6e5672f0.js" crossorigin="anonymous" defer></script>
+    <script src="https://kit.fontawesome.com/4d6e5672f0.js" crossorigin="anonymous"></script>
     <title>
       {% block page_title %}{% endblock page_title %}
       | Airbnb</title>
@@ -41,62 +41,53 @@
       const searchFilter = document.getElementById("js-searchFilter");
       const profileBtn = document.getElementById("js-profile");
       const profileDiv = document.getElementById("js-profileDiv");
-      const linkToReviews = document.getElementById("js-reviews");
       const chatInput = document.getElementById("id_message");
-
-      window.onload = () => {
-        chatInput.focus();
-      }
 
       const handleLangChange = () => {
         const selected = langSelect.value;
-        fetch(`{% url 'users:switch_language' %}?lang=${selected}`).then(() => window.location.reload());
-      }
+        fetch(`{% url 'users:switch_language' %}?lang=${selected}`).then(() =>
+          window.location.reload()
+        );
+      };
 
       const closeFilter = () => {
         const searchForm = document.querySelector(".search_form");
-        searchForm.style.zIndex=0;
-        searchForm.style.opacity=0;
-        searchForm.style.pointerEvents="none";
-        
+        searchForm.style.zIndex = 0;
+        searchForm.style.opacity = 0;
+        searchForm.style.pointerEvents = "none";
         searchFilter.removeEventListener("click", closeFilter);
         searchFilter.addEventListener("click", openFilter);
-      }
+      };
 
       const openFilter = () => {
         const searchForm = document.querySelector(".search_form");
-        searchForm.style.zIndex=20;
-        searchForm.style.opacity=1;
-        searchForm.style.pointerEvents="auto";
-
+        searchForm.style.zIndex = 20;
+        searchForm.style.opacity = 1;
+        searchForm.style.pointerEvents = "auto";
         searchFilter.removeEventListener("click", openFilter);
         searchFilter.addEventListener("click", closeFilter);
-      }
+      };
 
       const showProfileMenu = () => {
         const profileMenu = document.getElementById("profileMenu");
-        profileMenu.style.zIndex=50;
-        profileMenu.style.opacity=1;
-        profileMenu.style.pointerEvents="auto";
-      }
+        profileMenu.style.zIndex = 50;
+        profileMenu.style.opacity = 1;
+        profileMenu.style.pointerEvents = "auto";
+      };
 
       const hideProfileMenu = () => {
         const profileMenu = document.getElementById("profileMenu");
         profileMenu.style.zIndex = 0;
         profileMenu.style.opacity = 0;
         profileMenu.style.pointerEvents = "none";
-      }
+      };
 
-      const scrollToReviews = () => {
-        const reviewsLocation = document.querySelector(".reviews").offsetTop;
-        const navHeight = document.querySelector("header").offsetHeight;
-
-        window.scrollTo({top:reviewsLocation - navHeight, behavior:'smooth'});
-      }
+      window.onload = () => {
+        chatInput.focus();
+      };
 
       profileBtn.addEventListener("mouseover", showProfileMenu);
       profileDiv.addEventListener("mouseleave", hideProfileMenu);
-      linkToReviews.addEventListener("click", scrollToReviews);
       langSelect.addEventListener("change", handleLangChange);
       searchFilter.addEventListener("click", openFilter);
     </script>
