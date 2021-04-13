@@ -112,6 +112,20 @@
   margin: 0px 16px;
 }
 
+.messages_hr-sect {
+  @apply flex items-center text-gray-400 text-xs my-4;
+}
+.messages_hr-sect::before,
+.messages_hr-sect::after {
+  content: "";
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.1);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+  margin: 0px 16px;
+}
+
 @keyframes messageFadeIn {
   0% {
     opacity: 0;

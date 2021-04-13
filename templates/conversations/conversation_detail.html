@@ -49,6 +49,9 @@ Conversation
         </div>
         <div class="flex flex-col px-4 pt-4 overflow-scroll h-5/6">
             {% for message in conversation.messages.all %}
+                {% ifchanged message.created.astimezone.date %}
+                    <div class="messages_hr-sect">{{message.created|date:"M j, Y"}}</div>
+                {% endifchanged %}
                 <div class="flex mb-6 {% if message.user.pk == user.pk %} self-end flex-row-reverse {% endif %}">
                     {% if message.user != user %}
                         {% include 'partials/user_avatar.html' with user=message.user size=16 %}
@@ -64,7 +67,6 @@ Conversation
                         ">{{message.message}}</div>
                     </div>
                     <div class="flex items-end">
-                        <span class="text-gray-400 text-sm font-light">{{message.created|date:"n/j"}}</span>
                         <span class="text-gray-400 text-sm font-light ml-1">{{message.created|time:"H:i"}}</span>
                     </div>
                     <a name="message_{{message.pk}}"></a>
