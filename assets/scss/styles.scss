@@ -113,7 +113,7 @@
 }
 
 .messages_hr-sect {
-  @apply flex items-center text-gray-400 text-xs my-4;
+  @apply flex items-center text-gray-400 text-sm my-4;
 }
 .messages_hr-sect::before,
 .messages_hr-sect::after {
@@ -333,6 +333,19 @@ textarea {
   &:not(:first-child) {
     @apply text-gray-600;
   }
+}
+
+.profile_update_form {
+  label {
+    display: none;
+  }
+  #id_avatar {
+    @apply h-20;
+  }
+}
+
+#avatar-clear_id {
+  display: none;
 }
 
 @tailwind utilities;

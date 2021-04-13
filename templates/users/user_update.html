@@ -15,7 +15,7 @@
 
     <div class="continue_title">{% trans "Profile Update" %}</div>
     
-    <form class="items-center mb-0" method="POST" enctype="multipart/form-data">
+    <form class="profile_update_form items-center mb-0" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% if form.non_field_errors %}

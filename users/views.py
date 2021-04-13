@@ -232,6 +232,7 @@ class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView
 
     model = models.User
     fields = (
+        "avatar",
         "first_name",
         "last_name",
         "email",
