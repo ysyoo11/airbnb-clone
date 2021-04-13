@@ -64,7 +64,8 @@ Conversation
                         ">{{message.message}}</div>
                     </div>
                     <div class="flex items-end">
-                        <span class="text-gray-400 text-sm font-light">{{message.created|time:"H:i"}}</span>
+                        <span class="text-gray-400 text-sm font-light">{{message.created|date:"n/j"}}</span>
+                        <span class="text-gray-400 text-sm font-light ml-1">{{message.created|time:"H:i"}}</span>
                     </div>
                     <a name="message_{{message.pk}}"></a>
                 </div>

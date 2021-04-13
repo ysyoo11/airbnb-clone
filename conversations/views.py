@@ -5,7 +5,6 @@ from users import models as user_models
 from reservations import models as reservation_models
 from . import models, forms, mixins
 from users import mixins as user_mixins
-from rooms import models as room_models
 
 
 def go_conversations(request, reservation_pk, a_pk, b_pk):
