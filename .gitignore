@@ -144,3 +144,6 @@ uploads/
 
 photos_seed.zip
 node_modules
+
+# Google
+client_id.json

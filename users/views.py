@@ -1,5 +1,6 @@
 import os
 import requests
+import logging
 from django.http import HttpResponse
 from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -13,6 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import PasswordChangeView
 from django.core.files.base import ContentFile
+from urllib.parse import urlencode
 from config import settings
 from . import forms, models, mixins
 
@@ -218,6 +220,74 @@ def kakao_callback(request):
             messages.success(request, f"Welcome back, {user.first_name}!")
             return redirect(reverse("core:home"))
     except KakaoException as e:
+        messages.error(request, e)
+        return redirect(reverse("users:login"))
+
+
+def google_login(request):
+    client_id = os.environ.get("GOOGLE_ID")
+    authorize_uri = "https://accounts.google.com/o/oauth2/v2/auth"
+    redirect_uri = "http://127.0.0.1:8000/users/login/google/callback"
+    scope = "https://www.googleapis.com/auth/userinfo.profile"
+    query_string = urlencode(
+        {
+            "client_id": client_id,
+            "redirect_uri": redirect_uri,
+            "response_type": "token",
+            "scope": scope,
+        }
+    )
+    login_url = authorize_uri + "?" + query_string
+    return redirect(login_url)
+
+
+class GoogleException(Exception):
+    pass
+
+
+def google_callback(request):
+    try:
+        access_token = request.GET.get("access_token", None)
+        print(access_token)
+        client_id = os.environ.get("GOOGLE_ID")
+        client_secret = os.environ.get("GOOGLE_SECRET")
+        """ error """
+        token_request = requests.get(
+            f"https://accounts.google.com/o/oauth2/v2/auth/access_token?client_id={client_id}&client_secret={client_secret}&access_token={access_token}"
+        )
+        token_json = token_request.json()
+        """ error """
+        error = token_json.get("error", None)
+        if error is not None:
+            raise GoogleException("Can't get the authorization code.")
+        else:
+            access_token = token_json.get("access_token")
+            profile_request = requests.get(
+                "https://www.googleapis.com/auth/userinfo.profile",
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+            profile_json = profile_request.json()
+            email = profile_json.get("email", None)
+            if email is None:
+                raise GoogleException("Please let me know your email address.")
+            try:
+                user = models.User.objects.get(email=email)
+                if user.login_method != models.User.LOGIN_GOOGLE:
+                    raise GoogleException(f"Please log in with: {user.login_method}")
+            except models.User.DoesNotExist:
+                user = models.User.objects.create(
+                    email=email,
+                    username=email,
+                    first_name=email,
+                    login_method=models.User.LOGIN_GOOGLE,
+                    email_verified=True,
+                )
+                user.set_unusable_password()
+                user.save()
+            login(request, user)
+            messages.success(request, f"Welcome, {user.first_name}!")
+            return redirect(reverse("core:home"))
+    except GoogleException as e:
         messages.error(request, e)
         return redirect(reverse("users:login"))
 

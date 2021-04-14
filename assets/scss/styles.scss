@@ -58,10 +58,11 @@
 }
 
 .social_login {
-  @apply justify-center border-2 border-gray-400 mb-3 relative hover:border-gray-700;
+  @apply justify-center duration-200 border-2 border-gray-400 mb-3 relative hover:border-gray-700;
   &:hover {
     .github_icon,
     .kakao_icon,
+    .google_icon,
     .social_login_text {
       @apply text-white;
     }
@@ -76,6 +77,9 @@
   .kakao_icon {
     @apply text-yellow-500;
   }
+  .google_icon {
+    color: #dc4935;
+  }
 
   .social_login_text {
     @apply text-sm font-medium text-gray-600;
@@ -83,11 +87,18 @@
 }
 
 .github {
-  @apply duration-200 hover:bg-gray-600;
+  @apply hover:bg-gray-600;
 }
 
 .kakao {
-  @apply duration-200 hover:bg-yellow-500 hover:border-yellow-500;
+  @apply hover:bg-yellow-500 hover:border-yellow-500;
+}
+
+.google {
+  &:hover {
+    background-color: #dc4935;
+    border-color: #dc4935;
+  }
 }
 
 .continue_btn {
