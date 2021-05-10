@@ -14,7 +14,7 @@
             <span class="place-self-center">{% trans "Messages" %}</span>
         </div>
         <div class="flex flex-col overflow-scroll w-full h-full">
-            <ul class="h-full overflow-scroll">
+            <ul class="h-full overflow-scroll">    
                 {% for conversation in conversations %}
                     <a href="{% url 'conversations:detail' conversation.pk %}">
                         <li class="h-24 flex items-center py-4 px-2 border-b border-gray-200 hover:bg-gray-200">
