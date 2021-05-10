@@ -1,6 +1,5 @@
 import os
 import requests
-import logging
 from django.http import HttpResponse
 from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -217,7 +216,7 @@ def kakao_callback(request):
                         f"{nickname}_avatar", ContentFile(photo_request.content)
                     )
             login(request, user)
-            messages.success(request, f"Welcome back, {user.first_name}!")
+            messages.success(request, f"Welcome, {user.first_name}!")
             return redirect(reverse("core:home"))
     except KakaoException as e:
         messages.error(request, e)
@@ -228,12 +227,12 @@ def google_login(request):
     client_id = os.environ.get("GOOGLE_ID")
     authorize_uri = "https://accounts.google.com/o/oauth2/v2/auth"
     redirect_uri = "http://127.0.0.1:8000/users/login/google/callback"
-    scope = "https://www.googleapis.com/auth/userinfo.profile"
+    scope = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
     query_string = urlencode(
         {
             "client_id": client_id,
             "redirect_uri": redirect_uri,
-            "response_type": "token",
+            "response_type": "code",
             "scope": scope,
         }
     )
@@ -247,29 +246,34 @@ class GoogleException(Exception):
 
 def google_callback(request):
     try:
-        access_token = request.GET.get("access_token", None)
-        print(access_token)
+        auth_code = request.GET.get("code", None)
         client_id = os.environ.get("GOOGLE_ID")
         client_secret = os.environ.get("GOOGLE_SECRET")
-        """ error """
-        token_request = requests.get(
-            f"https://accounts.google.com/o/oauth2/v2/auth/access_token?client_id={client_id}&client_secret={client_secret}&access_token={access_token}"
-        )
+        data = {
+            "code": auth_code,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "redirect_uri": "http://127.0.0.1:8000/users/login/google/callback",
+            "grant_type": "authorization_code",
+        }
+        token_request = requests.post("https://oauth2.googleapis.com/token", data=data)
         token_json = token_request.json()
-        """ error """
         error = token_json.get("error", None)
         if error is not None:
             raise GoogleException("Can't get the authorization code.")
         else:
             access_token = token_json.get("access_token")
             profile_request = requests.get(
-                "https://www.googleapis.com/auth/userinfo.profile",
+                "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
                 headers={"Authorization": f"Bearer {access_token}"},
             )
             profile_json = profile_request.json()
             email = profile_json.get("email", None)
             if email is None:
                 raise GoogleException("Please let me know your email address.")
+            first_name = profile_json.get("given_name")
+            last_name = profile_json.get("family_name")
+            profile_image = profile_json.get("picture")
             try:
                 user = models.User.objects.get(email=email)
                 if user.login_method != models.User.LOGIN_GOOGLE:
@@ -278,12 +282,18 @@ def google_callback(request):
                 user = models.User.objects.create(
                     email=email,
                     username=email,
-                    first_name=email,
+                    first_name=first_name,
+                    last_name=last_name,
                     login_method=models.User.LOGIN_GOOGLE,
                     email_verified=True,
                 )
                 user.set_unusable_password()
                 user.save()
+                if profile_image is not None:
+                    photo_request = requests.get(profile_image)
+                    user.avatar.save(
+                        f"{first_name}_avatar", ContentFile(photo_request.content)
+                    )
             login(request, user)
             messages.success(request, f"Welcome, {user.first_name}!")
             return redirect(reverse("core:home"))
