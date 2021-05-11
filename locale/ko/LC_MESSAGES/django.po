@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-30 16:00+0900\n"
+"POT-Creation-Date: 2021-05-11 18:43+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: reservations/views.py:23
+#: conversations/mixins.py:15
+msgid "You are not one of the participants 🤨"
+msgstr "당신은 이 대화의 참여자가 아닙니다 🤨"
+
+#: reservations/views.py:30
 msgid "Access denied."
 msgstr "접속 불가능 😐"
 
-#: reservations/views.py:65
+#: reservations/views.py:74
 msgid "Reservation Updated."
 msgstr "예약정보 업데이트가 업데이트 되었습니다."
 
@@ -63,36 +67,46 @@ msgid "Search by City"
 msgstr "도시명으로 검색"
 
 #: templates/conversations/conversation_detail.html:14
+#: templates/conversations/my_conversations.html:14
+#: templates/partials/nav.html:22
+#, fuzzy
+#| msgid "Send a Message"
+msgid "Messages"
+msgstr "메세지"
+
+#: templates/conversations/conversation_detail.html:48
+#: templates/conversations/my_conversations.html:47
+msgid "Chat"
+msgstr "채팅"
+
+#: templates/conversations/conversation_detail.html:80
+msgid "Send"
+msgstr "보내기"
+
+#: templates/conversations/conversation_detail.html:87
+#: templates/reservations/detail.html:16
 msgid "Reservation Details"
 msgstr "예약 정보"
 
-#: templates/conversations/conversation_detail.html:26
+#: templates/conversations/conversation_detail.html:103
 msgid "night"
 msgstr "/ 1박"
 
-#: templates/conversations/conversation_detail.html:33
+#: templates/conversations/conversation_detail.html:110
 msgid "Check-in"
 msgstr "체크인"
 
-#: templates/conversations/conversation_detail.html:37
+#: templates/conversations/conversation_detail.html:115
 msgid "Check-out"
 msgstr "체크아웃"
 
-#: templates/conversations/conversation_detail.html:50
+#: templates/conversations/conversation_detail.html:130
 msgid "Joined in"
 msgstr "가입 날짜:"
 
-#: templates/conversations/conversation_detail.html:61
+#: templates/conversations/conversation_detail.html:142
 msgid "Superhost"
 msgstr "슈퍼호스트"
-
-#: templates/conversations/conversation_detail.html:73
-msgid "Chat"
-msgstr "메세지"
-
-#: templates/conversations/conversation_detail.html:102
-msgid "Send"
-msgstr "보내기"
 
 #: templates/emails/verify_email.html:3
 msgid "Please verify your email"
@@ -123,6 +137,12 @@ msgstr "깃허브로 계속하기"
 msgid "Continue with Kakaotalk"
 msgstr "카카오톡으로 계속하기"
 
+#: templates/partials/login_form/social_login.html:19
+#, fuzzy
+#| msgid "Continue with GitHub"
+msgid "Continue with Google"
+msgstr "깃허브로 계속하기"
+
 #: templates/partials/nav.html:8
 msgid "Become a guest"
 msgstr "게스트로 전환"
@@ -135,19 +155,29 @@ msgstr "호스트로 전환"
 msgid "Create a Room"
 msgstr "방 만들기"
 
-#: templates/partials/nav.html:17
+#: templates/partials/nav.html:18
 msgid "Profile"
 msgstr "프로필"
 
-#: templates/partials/nav.html:18
+#: templates/partials/nav.html:20
+#| msgid "My Favourites"
+msgid "My Favs"
+msgstr "즐겨찾기"
+
+#: templates/partials/nav.html:21
+#| msgid "Your Reservation"
+msgid "Reservations"
+msgstr "예약 목록"
+
+#: templates/partials/nav.html:25
 msgid "Log out"
 msgstr "로그아웃"
 
-#: templates/partials/nav.html:20
+#: templates/partials/nav.html:27
 msgid "Log in"
 msgstr "로그인"
 
-#: templates/partials/nav.html:21
+#: templates/partials/nav.html:28
 msgid "Sign up"
 msgstr "회원가입"
 
@@ -155,38 +185,66 @@ msgstr "회원가입"
 msgid "/ night"
 msgstr "/ 1박"
 
-#: templates/reservations/detail.html:16
-msgid "Your Reservation"
-msgstr "예약 상세"
-
-#: templates/reservations/detail.html:41
+#: templates/reservations/detail.html:51
 msgid "Contact Your Airbnb Host"
 msgstr "당신의 호스트에게 연락해보세요"
 
-#: templates/reservations/detail.html:42
+#: templates/reservations/detail.html:53
+#, fuzzy
+#| msgid "Contact Your Airbnb Host"
+msgid "Contact Your Guest"
+msgstr "당신의 호스트에게 연락해보세요"
+
+#: templates/reservations/detail.html:58
 msgid ""
 "Your host is the best person to contact for questions about your reservation."
 msgstr "예약에 관한 질문이라면 호스트에게 문의하시는게 가장 빠르고 정확합니다."
 
-#: templates/reservations/detail.html:44
+#: templates/reservations/detail.html:60
+msgid ""
+"It is good to inform your guest if there's anything your guest needs to know "
+"before the stay."
+msgstr ""
+
+#: templates/reservations/detail.html:65
 msgid "Send a Message"
 msgstr "메세지 보내기"
 
-#: templates/reservations/detail.html:55
+#: templates/reservations/detail.html:75
 msgid "Write a Review"
 msgstr "리뷰 작성하기"
 
-#: templates/reservations/detail.html:59
+#: templates/reservations/detail.html:79
 msgid "Submit"
 msgstr "제출"
 
-#: templates/reservations/detail.html:66
+#: templates/reservations/detail.html:86
 msgid "Confirm Reservation"
 msgstr "예약 확정하기"
 
-#: templates/reservations/detail.html:68
+#: templates/reservations/detail.html:88
 msgid "Cancel Reservation"
 msgstr "예약 취소하기"
+
+#: templates/reservations/my_reservations.html:16
+#, fuzzy
+#| msgid "Reservation Details"
+msgid "Reservation Lists"
+msgstr "예약 정보"
+
+#: templates/reservations/my_reservations.html:18
+#, fuzzy
+#| msgid "Your Reservation"
+msgid "Your Reservations"
+msgstr "예약 상세"
+
+#: templates/reservations/my_reservations.html:30
+msgid "Guest"
+msgstr "게스트"
+
+#: templates/reservations/my_reservations.html:32
+msgid "Host"
+msgstr "호스트"
 
 #: templates/rooms/photo_create.html:16
 msgid "New Photo"
@@ -302,63 +360,63 @@ msgstr "비밀번호 변경"
 msgid "Access is denied 😐"
 msgstr "접속 불가능 😐"
 
-#: users/models.py:22
+#: users/models.py:21
 msgid "Male"
 msgstr "남자"
 
-#: users/models.py:23
+#: users/models.py:22
 msgid "Female"
 msgstr "여자"
 
-#: users/models.py:24
+#: users/models.py:23
 msgid "Other"
 msgstr "기타"
 
-#: users/models.py:32
+#: users/models.py:31
 msgid "English"
 msgstr "영어"
 
-#: users/models.py:33
+#: users/models.py:32
 msgid "Korean"
 msgstr "한국어"
 
-#: users/models.py:34
+#: users/models.py:33
 msgid "Japanese"
 msgstr "일본어"
 
-#: users/models.py:61
+#: users/models.py:62
 msgid "gender"
 msgstr "성별"
 
-#: users/models.py:63
+#: users/models.py:64
 msgid "bio"
 msgstr "자기소개"
 
-#: users/models.py:64
+#: users/models.py:65
 msgid "date_of_birth"
 msgstr "생년월일"
 
-#: users/models.py:66
+#: users/models.py:67
 msgid "language"
 msgstr "언어"
 
-#: users/models.py:73
+#: users/models.py:74
 msgid "currency"
 msgstr "화폐"
 
-#: users/models.py:79
+#: users/models.py:80
 msgid "superhost"
 msgstr "슈퍼호스트"
 
-#: users/models.py:80
+#: users/models.py:81
 msgid "email_verified"
 msgstr "이메일_인증"
 
-#: users/models.py:82
+#: users/models.py:83
 msgid "email_code"
 msgstr "이메일_코드"
 
-#: users/models.py:85
+#: users/models.py:86
 msgid "login_method"
 msgstr "로그인_방법"
 
@@ -366,10 +424,16 @@ msgstr "로그인_방법"
 msgid "Verify Airbnb account"
 msgstr "Airbnb 계정을 인증하세요"
 
-#: users/views.py:44
+#: users/views.py:45
 msgid "See you later!"
 msgstr "좋은 하루 되세요!"
 
-#: users/views.py:53
+#: users/views.py:54
 msgid "Welcome! 🎉"
 msgstr "환영합니다! 🎉"
+
+#: users/views.py:356
+#, fuzzy
+#| msgid "Review submitted successfully."
+msgid "Password changed successfully."
+msgstr "리뷰가 성공적으로 등록되었습니다."
