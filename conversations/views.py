@@ -84,21 +84,24 @@ class ConversationsListView(user_mixins.LoggedInOnlyView, View):
     def get(self, *args, **kwargs):
         user = self.request.user
         conversations = models.Conversation.objects.filter(participants=user)
-        for conversation in conversations:
-            messages = list(conversation.messages.all())
-            if len(messages) == 0:
-                conversation.last_spoken_user = ""
-                conversation.last_message = ""
-            else:
-                conversation.last_spoken_user = messages[-1].user.first_name
-                conversation.last_message = messages[-1].message
-        return render(
-            self.request,
-            "conversations/my_conversations.html",
-            {
-                "user": user,
-                "conversations": conversations,
-                "last_spoken_user": conversation.last_spoken_user,
-                "last_message": conversation.last_message,
-            },
-        )
+        if conversations:
+            for conversation in conversations:
+                messages = list(conversation.messages.all())
+                if len(messages) == 0:
+                    conversation.last_spoken_user = ""
+                    conversation.last_message = ""
+                else:
+                    conversation.last_spoken_user = messages[-1].user.first_name
+                    conversation.last_message = messages[-1].message
+            return render(
+                self.request,
+                "conversations/my_conversations.html",
+                {
+                    "user": user,
+                    "conversations": conversations,
+                    "last_spoken_user": conversation.last_spoken_user,
+                    "last_message": conversation.last_message,
+                },
+            )
+        else:
+            return render(self.request, "conversations/my_conversations.html")

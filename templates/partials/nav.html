@@ -17,9 +17,9 @@
         <div id="js-profileDiv">
             <a href="{{user.get_absolute_url}}" class="nav_link relative" id="js-profile"><li>{% trans "Profile" %}</li></a>
             <ul class="absolute w-32 bg-white transform -translate-x-7 border border-gray-300 z-0 opacity-0 pointer-events-none text-sm" id="profileMenu">
-                <a href="{% url 'lists:my_lists' %}"><li class="nav_profile_menu">My Favs</li></a>
-                <a href="{% url 'reservations:my_reservations' %}"><li class="nav_profile_menu">Reservations</li></a>
-                <a href="{% url 'conversations:list' %}"><li class="nav_profile_menu">Messages</li></a>
+                <a href="{% url 'lists:my_lists' %}"><li class="nav_profile_menu">{% trans "My Favs" %}</li></a>
+                <a href="{% url 'reservations:my_reservations' %}"><li class="nav_profile_menu">{% trans "Reservations" %}</li></a>
+                <a href="{% url 'conversations:list' %}"><li class="nav_profile_menu">{% trans "Messages" %}</li></a>
             </ul>
         </div>
         <a href="{% url 'users:logout' %}" class="nav_link"><li>{% trans "Log out" %}</li></a>
