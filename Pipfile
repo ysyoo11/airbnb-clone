@@ -16,11 +16,12 @@ oauth2client = "*"
 apiclient = "*"
 google-api-python-client = "*"
 query-string = "*"
+awsebcli = "*"
 
 [dev-packages]
 pylint = "*"
 flake8 = "*"
-black = "*"
+awsebcli = "*"
 
 [requires]
 python_version = "3.9"
