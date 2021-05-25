@@ -16,7 +16,6 @@ oauth2client = "*"
 apiclient = "*"
 google-api-python-client = "*"
 query-string = "*"
-awsebcli = "*"
 
 [dev-packages]
 pylint = "*"
