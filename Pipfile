@@ -16,6 +16,7 @@ oauth2client = "*"
 apiclient = "*"
 google-api-python-client = "*"
 query-string = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pylint = "*"
