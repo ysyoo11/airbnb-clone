@@ -128,7 +128,7 @@ class Room(core_models.TimeStampedModel):
         return photos
 
     def get_calendars(self):
-        now = timezone.now()
+        now = timezone.localtime()
         this_year = now.year
         this_month = now.month
         this_month_cal = Calendar(this_year, this_month)
